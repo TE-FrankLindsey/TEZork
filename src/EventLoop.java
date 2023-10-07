@@ -33,6 +33,7 @@ public class EventLoop {
 //                System.out.printf(">>%s<<\n", textIn);
                 return;
             }
+            parser.parseText(textIn);
 
         }
     }

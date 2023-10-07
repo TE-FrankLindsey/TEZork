@@ -5,17 +5,18 @@ import Nouns.Noun;
 import Nouns.Pill;
 import Nouns.RedPill;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LoadNouns {
 
-    public static void load (List<Noun> nounList) {
-        Noun tmpNoun = new Pill();
-        nounList.add (tmpNoun);
-        tmpNoun = new RedPill();
-        nounList.add (tmpNoun);
-        tmpNoun = new BluePill();
-        nounList.add (tmpNoun);
+    public static List<Noun>load () {
+        List<Noun> nounList = new ArrayList<>();
 
+        nounList.add (new Pill());
+        nounList.add (new RedPill());
+        nounList.add (new BluePill());
+
+        return nounList;
     }
 }

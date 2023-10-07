@@ -2,25 +2,27 @@ package ParseGroup;
 
 
 import Nouns.Noun;
+import Verb.Verb;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Parser {
+    protected static String textIn;
+    protected static int parserPtr;
 
     protected static String verb = "";
     protected static String noun = "";
 
-    protected static String textIn;
-    protected static int parserPtr;
 
 //    private VerbParser verbParser = new VerbParser();
 
-    private List<Noun> allNouns = new ArrayList<Noun>();
+    private List<Noun> allNouns;
+    private List<Verb> allVerbs;
 
     public Parser () {
-        LoadNouns.load(allNouns);
+        allNouns = LoadNouns.load();
         int x = allNouns.size();
+        allVerbs = LoadVerbs.load();
     }
 
     public int getParserPtr()                            { return parserPtr; }
@@ -68,10 +70,12 @@ public class Parser {
         }
     }
 
-    public boolean parseText (String text) {
+    public boolean parseText (String textIn) {
+        this. textIn = textIn;
+        parserPtr = 0;
+
         verb = "";
         noun = "";
-        parserPtr = 0;
 
 //        if (verbParser.parse(text))
 //            System.out.printf("VERB>>%s<<\n", verb);
