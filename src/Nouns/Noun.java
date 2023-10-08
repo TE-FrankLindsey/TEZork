@@ -13,10 +13,13 @@ public abstract class Noun extends SyntaxElement {
     public String getName()
         { return name; }
 
+    public String getDisplayName()
+        { return (modifier!=null) ? String.format("%s %s", modifier, name) : name; }
+
     public Noun () {
         super("", "");
         this.name = "";
-        this.modifier = "";
+        this.modifier = null;
     }
 
     public Noun (String name, String modifier, String shortDesc, String longDesc) {
@@ -28,7 +31,7 @@ public abstract class Noun extends SyntaxElement {
     public Noun (String name, String shortDesc, String longDesc) {
         super(shortDesc, longDesc);
         this.name = name;
-        this.modifier = "";
+        this.modifier = null;
     }
 
 }
