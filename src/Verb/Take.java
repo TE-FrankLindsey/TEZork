@@ -1,4 +1,4 @@
-package ParseGroup;
+package Verb;
 
 import Verb.Verb;
 
@@ -11,7 +11,7 @@ public class Take extends Verb {
                 "take",
 
                 // synonyms
-                new String[]{"take", "get", "pickup", "Pick up"},
+                new String[]{"take", "grab", "get", "pickup", "pick up"},
 
                 // shortDescription
                 "shortDescription: action verb take",

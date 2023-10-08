@@ -1,6 +1,9 @@
 package ParseGroup;
 
 import Verb.Verb;
+import Verb.Examine;
+import Verb.Open;
+import Verb.Take;
 
 import java.util.ArrayList;
 import java.util.List;

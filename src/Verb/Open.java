@@ -1,17 +1,17 @@
-package ParseGroup;
+package Verb;
 
 import Verb.Verb;
 
-public class Examine extends Verb {
+public class Open extends Verb {
 
-    public Examine() {
+    public Open() {
 
         super(
                 // name
-                "examine",
+                "open",
 
                 // synonyms
-                new String[]{"examine", "look at", "feel", "poke", "touch"},
+                new String[]{"open", "pry open", "force open"},
 
                 // shortDescription
                 "shortDescription: action verb examine",
