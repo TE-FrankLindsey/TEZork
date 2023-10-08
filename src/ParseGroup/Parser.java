@@ -12,7 +12,7 @@ public class Parser {
 
     protected static Verb currVerb = null;
     protected static Noun currNoun = null;
-
+    protected enum NounStatus {SUCCESS, FAILURE, DUPLICATE}
 
 //    private VerbParser verbParser = new VerbParser();
 
@@ -137,15 +137,14 @@ public class Parser {
 
         eatBlanks();
 
-//        int nounCount = 0;
+        NounStatus rtnStatus = NounStatus.FAILURE;
         for (Noun someNoun : allNouns)
-            if (parseNoun(someNoun)) {
-//                if (++nounCount > 1)
-                    break;
-            }
+            if ((rtnStatus = parseNoun(someNoun)) != NounStatus.FAILURE)
+                break;
 
-//        if (nounCount > 1)
-//            System.out.printf("Which %s\n", currNoun.getName());
+//        if (currNoun!=null && currNoun.getModifier()==null && !isNounUnique(currNoun))
+        if (rtnStatus == NounStatus.DUPLICATE)
+            System.out.printf("Which %s did you want to %s??\n", currNoun.getName(), currVerb.getName());
 
         // parse noun
         System.out.printf("parsed-- %s, %s\n",
@@ -176,35 +175,46 @@ public class Parser {
     }
 
 
-    private boolean parseNoun (Noun someNoun) {
+    private NounStatus parseNoun (Noun someNoun) {
 
         // save the parser pointer in order to restore following failure
         int tmpParserPtr = parserPtr;
 
         // if modifier and name match then return true
-//String x = remainingText();
         if (eatSubString(someNoun.getModifier())) {
-//String y = remainingText();
-//eatBlanks();
-//y = remainingText();
-//String a = someNoun.getName();
             if (eatSubString(someNoun.getName())) {
-//String z = remainingText();
                 currNoun = someNoun;
-                return true;
+                return NounStatus.SUCCESS;
             }
         }
 
         // if modifier failed to match then test for unmodified verb
         else if (eatSubString(someNoun.getName())) {
+
             currNoun = someNoun;
-            return true;
+
+            // test for uniqueness
+            if (! isNounUnique(currNoun))
+                return NounStatus.DUPLICATE;
+            
+            return NounStatus.SUCCESS;
         }
 
         // on failure restore the parser pointer and return false
         parserPtr = tmpParserPtr;
-        return false;
+        return NounStatus.FAILURE;
     }
 
+    private boolean isNounUnique (Noun noun) {
+
+        int nounCount = 0;
+        for (Noun someNoun : allNouns)
+            if (someNoun.getName().equals(noun.getName())) {
+                if (++nounCount > 1)
+                    return false;
+            }
+
+        return false;
+    }
 
 }
