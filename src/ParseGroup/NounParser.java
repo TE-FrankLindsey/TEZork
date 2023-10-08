@@ -17,7 +17,7 @@ public class NounParser extends Parser {
 
         for (int i=0; i!=nounAry.length; i++) {
             if (eatSubString(nounAry[i])) {
-                noun = nounAry[i];
+                currNoun = nounAry[i];
                 return true;
             }
         }
