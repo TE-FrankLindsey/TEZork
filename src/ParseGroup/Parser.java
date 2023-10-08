@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Parser {
     protected static String textIn;
-    protected static int XparserPtr;
+    protected static int parserPtr;
 
     protected static Verb currVerb = null;
     protected static String currNoun = "";
@@ -25,30 +25,33 @@ public class Parser {
         allVerbs = LoadVerbs.load();
     }
 
-    public int getParserPtr()                            { return XparserPtr; }
+    public int getParserPtr()                            { return parserPtr; }
     public void setParserPtr(int idx)                    {
 
-System.out.printf("setParserPtr %d\n", idx);
+        System.out.printf("setParserPtr %d\n", idx);
 
-        XparserPtr = idx; }
+        parserPtr = idx; }
 
     protected void advanceParserPtr(int length)
-        {
+    {
 
-            XparserPtr += length;
-System.out.printf("advanceParserPtr %d, %d\n", length, XparserPtr);
+        parserPtr += length;
+        System.out.printf("advanceParserPtr %d, %d\n", length, parserPtr);
 
-        }
+    }
 
     private String remainingText()
-        { return textIn.substring(XparserPtr); }
+    { return textIn.substring(parserPtr); }
 
     protected boolean eatSubString (String text) {
-        int len = text.length();
-        if (len > textIn.length()-XparserPtr)
+        if (text == null)
             return false;
 
-        String subText = textIn.substring(XparserPtr, XparserPtr +len);
+        int len = text.length();
+        if (len > textIn.length()- parserPtr)
+            return false;
+
+        String subText = textIn.substring(parserPtr, parserPtr +len);
         if (text.equalsIgnoreCase(subText)) {
             advanceParserPtr(len);
             return true;
@@ -59,7 +62,7 @@ System.out.printf("advanceParserPtr %d, %d\n", length, XparserPtr);
 
     protected boolean matchSubString (String text) {
         int len = text.length();
-        String subText = textIn.substring(XparserPtr, XparserPtr +len);
+        String subText = textIn.substring(parserPtr, parserPtr +len);
         if (text.equalsIgnoreCase(subText)) {
 //            advanceParserPtr(len);
             return true;
@@ -92,12 +95,11 @@ System.out.printf("advanceParserPtr %d, %d\n", length, XparserPtr);
             } else {
                 keepGoing = false;
             }
-        }
-    }
+        }    }
 
     public boolean parseText (String textIn) {
         this. textIn = textIn;
-        XparserPtr = 0;
+        parserPtr = 0;
 
 
         // parse out the verb noun pair, clear verb and noun first
@@ -126,36 +128,55 @@ System.out.printf("advanceParserPtr %d, %d\n", length, XparserPtr);
     private boolean parseVerbNounPair () {
 
         // parse verb
-//        boolean hasVerb = false;
         for (Verb someVerb : allVerbs)
-
-            for (int i=0; i!=someVerb.getSynonymCount(); i++) {
-                if (eatSubString(someVerb.getSynonym(i))) {
-                    currVerb = someVerb;
-                    break;
-                }
-            }
-
-            /*
-            if (someVerb.parse(remainingText())) {
-                currVerb = someVerb.getName();
-                hasVerb = true;
-System.out.println("parseVerbNounPair");
-System.out.printf("parserPtr: %d, %d\n", XparserPtr, currVerb.length());
-                XparserPtr += currVerb.length();
+            if (parseVerb(someVerb))
                 break;
-            }
-*/
 
         eatBlanks();
+
+        // parse noun
 
         if (currVerb != null) {
             System.out.printf("parsed-- %s, %s\n", currVerb.getName(), remainingText());
         }
         else
-           System.out.println("I do not understand");
+            System.out.println("I do not understand");
 
         return true;
     }
+
+    private boolean parseVerb (Verb someVerb) {
+
+        for (int i=0; i!=someVerb.getSynonymCount(); i++) {
+            if (eatSubString(someVerb.getSynonym(i))) {
+                currVerb = someVerb;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    private boolean parseNoun (Noun someNoun) {
+
+        // save the parser pointer in order to restore in case of failure
+        int tmpParserPtr = parserPtr;
+
+        // if modifier and name match then return true
+        if (eatSubString(someNoun.getModifier())) {
+            if (eatSubString(someNoun.getName()))
+                return true;
+        }
+
+        // if modifier failed to match then test for unmodified verb
+        else if (eatSubString(someNoun.getName()))
+            return true;
+
+        // on failure restore the parser pointer and return false
+        parserPtr = tmpParserPtr;
+        return false;
+    }
+
 
 }
