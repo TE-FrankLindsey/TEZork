@@ -10,6 +10,13 @@ public abstract class Verb extends SyntaxElement {
     public String getName()
         { return name; }
 
+    public int getSynonymCount () {
+        return synonyms.length;
+    }
+
+    public String getSynonym (int x) {
+        return synonyms[x];
+    }
 
     public Verb(String name, String[] synonyms, String shortDesc, String longDesc) {
         super(shortDesc, longDesc);

@@ -10,7 +10,7 @@ public class Parser {
     protected static String textIn;
     protected static int XparserPtr;
 
-    protected static String currVerb = "";
+    protected static Verb currVerb = null;
     protected static String currNoun = "";
 
 
@@ -45,6 +45,9 @@ System.out.printf("advanceParserPtr %d, %d\n", length, XparserPtr);
 
     protected boolean eatSubString (String text) {
         int len = text.length();
+        if (len > textIn.length()-XparserPtr)
+            return false;
+
         String subText = textIn.substring(XparserPtr, XparserPtr +len);
         if (text.equalsIgnoreCase(subText)) {
             advanceParserPtr(len);
@@ -69,10 +72,10 @@ System.out.printf("advanceParserPtr %d, %d\n", length, XparserPtr);
 
         for (boolean keepGoing=true; keepGoing; ) {
             if (eatSubString(" ")) {
-            } else if (eatSubString(",")) {
-            } else if (eatSubString("a")) {
-            } else if (eatSubString("an")) {
-            } else if (eatSubString("the")) {
+            } else if (eatSubString(", ")) {
+            } else if (eatSubString("a ")) {
+            } else if (eatSubString("an ")) {
+            } else if (eatSubString("the ")) {
             } else {
                 keepGoing = false;
             }
@@ -82,10 +85,10 @@ System.out.printf("advanceParserPtr %d, %d\n", length, XparserPtr);
     protected void eatBlanks () {
         for (boolean keepGoing=true; keepGoing; ) {
             if (eatSubString(" ")) {
-            } else if (eatSubString(",")) {
-            } else if (eatSubString("a")) {
-            } else if (eatSubString("an")) {
-            } else if (eatSubString("the")) {
+            } else if (eatSubString(", ")) {
+            } else if (eatSubString("a ")) {
+            } else if (eatSubString("an ")) {
+            } else if (eatSubString("the ")) {
             } else {
                 keepGoing = false;
             }
@@ -98,7 +101,7 @@ System.out.printf("advanceParserPtr %d, %d\n", length, XparserPtr);
 
 
         // parse out the verb noun pair, clear verb and noun first
-        currVerb = "";
+        currVerb = null;
         currNoun = "";
         parseVerbNounPair ();
 
@@ -123,8 +126,17 @@ System.out.printf("advanceParserPtr %d, %d\n", length, XparserPtr);
     private boolean parseVerbNounPair () {
 
         // parse verb
-        boolean hasVerb = false;
+//        boolean hasVerb = false;
         for (Verb someVerb : allVerbs)
+
+            for (int i=0; i!=someVerb.getSynonymCount(); i++) {
+                if (eatSubString(someVerb.getSynonym(i))) {
+                    currVerb = someVerb;
+                    break;
+                }
+            }
+
+            /*
             if (someVerb.parse(remainingText())) {
                 currVerb = someVerb.getName();
                 hasVerb = true;
@@ -133,11 +145,12 @@ System.out.printf("parserPtr: %d, %d\n", XparserPtr, currVerb.length());
                 XparserPtr += currVerb.length();
                 break;
             }
+*/
 
         eatBlanks();
 
-        if (hasVerb) {
-            System.out.printf("parsed-- %s, %s\n", currVerb, remainingText());
+        if (currVerb != null) {
+            System.out.printf("parsed-- %s, %s\n", currVerb.getName(), remainingText());
         }
         else
            System.out.println("I do not understand");

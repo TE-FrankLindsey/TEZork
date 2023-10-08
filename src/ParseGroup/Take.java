@@ -11,7 +11,7 @@ public class Take extends Verb {
                 "take",
 
                 // synonyms
-                new String[]{"take", "get", "pickup", "Pick up"},
+                new String[]{"take", "get", "pickup", "pick up", "purchase"},
 
                 // shortDescription
                 "shortDescription: action verb take",
