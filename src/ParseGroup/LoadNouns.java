@@ -1,9 +1,6 @@
 package ParseGroup;
 
-import Nouns.BluePill;
-import Nouns.Noun;
-import Nouns.Pill;
-import Nouns.RedPill;
+import Nouns.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +13,8 @@ public class LoadNouns {
         nounList.add (new Pill());
         nounList.add (new RedPill());
         nounList.add (new BluePill());
+        nounList.add (new RedApple());
+        nounList.add (new BlueApple());
 
         return nounList;
     }

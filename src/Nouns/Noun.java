@@ -13,6 +13,9 @@ public abstract class Noun extends SyntaxElement {
     public String getName()
         { return name; }
 
+    public String getDisplayName()
+        { return (modifier!=null) ? String.format("%s %s", modifier, name) : name; }
+
     public Noun () {
         super("", "");
         this.name = "";

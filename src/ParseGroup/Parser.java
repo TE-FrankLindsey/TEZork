@@ -11,7 +11,7 @@ public class Parser {
     protected static int parserPtr;
 
     protected static Verb currVerb = null;
-    protected static String currNoun = "";
+    protected static Noun currNoun = null;
 
 
 //    private VerbParser verbParser = new VerbParser();
@@ -46,6 +46,9 @@ public class Parser {
     protected boolean eatSubString (String text) {
         if (text == null)
             return false;
+
+        // eat blanks and connectors between words
+//        eatBlanks ();
 
         int len = text.length();
         if (len > textIn.length()- parserPtr)
@@ -104,7 +107,7 @@ public class Parser {
 
         // parse out the verb noun pair, clear verb and noun first
         currVerb = null;
-        currNoun = "";
+        currNoun = null;
         parseVerbNounPair ();
 
 //        boolean hasVerb = false;
@@ -134,19 +137,34 @@ public class Parser {
 
         eatBlanks();
 
-        // parse noun
+//        int nounCount = 0;
+        for (Noun someNoun : allNouns)
+            if (parseNoun(someNoun)) {
+//                if (++nounCount > 1)
+                    break;
+            }
 
-        if (currVerb != null) {
-            System.out.printf("parsed-- %s, %s\n", currVerb.getName(), remainingText());
-        }
-        else
-            System.out.println("I do not understand");
+//        if (nounCount > 1)
+//            System.out.printf("Which %s\n", currNoun.getName());
+
+        // parse noun
+        System.out.printf("parsed-- %s, %s\n",
+                (currVerb==null) ? "null" : currVerb.getName(),
+                (currNoun==null) ? "null" : currNoun.getDisplayName());
+
+//        if (currVerb != null) {
+//            System.out.printf("parsed-- %s, %s\n", currVerb.getName(), remainingText());
+//        }
+//        else
+//            System.out.println("I do not understand");
 
         return true;
     }
 
     private boolean parseVerb (Verb someVerb) {
 
+        // search each synonym in verb for match to text
+        //  if found the parser pointer will advance length of synonym
         for (int i=0; i!=someVerb.getSynonymCount(); i++) {
             if (eatSubString(someVerb.getSynonym(i))) {
                 currVerb = someVerb;
@@ -160,18 +178,28 @@ public class Parser {
 
     private boolean parseNoun (Noun someNoun) {
 
-        // save the parser pointer in order to restore in case of failure
+        // save the parser pointer in order to restore following failure
         int tmpParserPtr = parserPtr;
 
         // if modifier and name match then return true
+//String x = remainingText();
         if (eatSubString(someNoun.getModifier())) {
-            if (eatSubString(someNoun.getName()))
+//String y = remainingText();
+//eatBlanks();
+//y = remainingText();
+//String a = someNoun.getName();
+            if (eatSubString(someNoun.getName())) {
+//String z = remainingText();
+                currNoun = someNoun;
                 return true;
+            }
         }
 
         // if modifier failed to match then test for unmodified verb
-        else if (eatSubString(someNoun.getName()))
+        else if (eatSubString(someNoun.getName())) {
+            currNoun = someNoun;
             return true;
+        }
 
         // on failure restore the parser pointer and return false
         parserPtr = tmpParserPtr;
