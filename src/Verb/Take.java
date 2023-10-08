@@ -11,11 +11,7 @@ public class Take extends Verb {
                 "take",
 
                 // synonyms
-<<<<<<< HEAD:src/Verb/Take.java
-                new String[]{"take", "grab", "get", "pickup", "pick up"},
-=======
-                new String[]{"take", "get", "pickup", "pick up", "purchase"},
->>>>>>> ParseVerb:src/ParseGroup/Take.java
+                new String[]{"take", "grab", "get", "pickup", "pick up", "purchase"},
 
                 // shortDescription
                 "shortDescription: action verb take",
