@@ -76,6 +76,7 @@ public class Parser {
             } else if (eatSubString(", ")) {
             } else if (eatSubString("a ")) {
             } else if (eatSubString("an ")) {
+            } else if (eatSubString("to ")) {
             } else if (eatSubString("the ")) {
             } else {
                 keepGoing = false;

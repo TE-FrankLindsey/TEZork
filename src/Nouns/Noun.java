@@ -56,4 +56,15 @@ public abstract class Noun extends SyntaxElement {
     public boolean canOpen ()
         { return (attributes&OPEN) == OPEN; }
 
+
+    // room support - move out to "Room" class soon as possible
+
+    protected final static int ENTER = 16;
+    protected final static int GO = 32;
+
+    public boolean canGo ()
+        { return (attributes&GO) == GO; }
+
+    
+
 }

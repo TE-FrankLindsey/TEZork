@@ -11,12 +11,14 @@ public class ProcessCommand {
     public List<Noun> allInventory;
     public List<Noun> myInventory = new ArrayList<>();
     public List<Noun> roomInventory = new ArrayList<>();
+    public List<Noun> directionInventory = new ArrayList<>();
     private Parser parser;
 
     public ProcessCommand () {
 
         allInventory = LoadNouns.load();
         roomInventory.addAll(allInventory);
+        directionInventory = LoadNouns.loadDirections();
         parser = new Parser ();
     }
 
@@ -137,6 +139,17 @@ public class ProcessCommand {
                     System.out.printf("Hard as you try you cannot open the %s\n", currNoun.getDisplayName());
             }
         }
+
+        else if (Action.equals("go")) {
+
+        }
+
+
+        if (! parser.parseCommandNoun(directionInventory)) {
+            System.out.println("GO TO HELL");
+        }
+        else
+            System.out.printf("GO TO %s\n", parser.getNoun().getName());
     }
 
 
