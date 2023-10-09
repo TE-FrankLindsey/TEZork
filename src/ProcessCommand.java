@@ -56,7 +56,7 @@ public class ProcessCommand {
         // Look
         else if (currVerb.getName().equals("look")) {
 
-            String stuff = "The room contains: ";
+            String stuff = "You see around you: ";
             if (roomInventory == null || roomInventory.size() == 0)
                 stuff += "nothing";
             else
@@ -89,7 +89,7 @@ public class ProcessCommand {
         }
         else if (Action.equals("take")) {
             if (! parser.parseCommandNoun (roomInventory)) {
-                if (! parser.isNounUnique())
+                if (parser.getNoun()!=null && !parser.isNounUnique())
                     System.out.printf("Which %s did you want to take?\n", parser.getNoun().getName());
                 else
                     System.out.println("I don't see that in here.");
