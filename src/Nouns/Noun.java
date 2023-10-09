@@ -7,6 +7,13 @@ public abstract class Noun extends SyntaxElement {
     protected final String modifier;
     protected final String name;
 
+    protected final static int EAT = 1;
+    protected final static int TAKE = 2;
+    protected final static int EXAMINE = 4;
+    protected final static int OPEN = 8;
+
+    protected int attributes;
+
     public String getModifier()
         { return modifier; }
 
@@ -18,18 +25,21 @@ public abstract class Noun extends SyntaxElement {
 
     public Noun () {
         super("", "");
+        attributes = 0;
         this.name = "";
         this.modifier = null;
     }
 
-    public Noun (String name, String modifier, String shortDesc, String longDesc) {
+    public Noun (int attributes, String name, String modifier, String shortDesc, String longDesc) {
         super(shortDesc, longDesc);
+        this.attributes = attributes;
         this.name = name;
         this.modifier = modifier;
     }
 
-    public Noun (String name, String shortDesc, String longDesc) {
+    public Noun (int attributes, String name, String shortDesc, String longDesc) {
         super(shortDesc, longDesc);
+        this.attributes = attributes;
         this.name = name;
         this.modifier = null;
     }
@@ -38,12 +48,12 @@ public abstract class Noun extends SyntaxElement {
     // attributes to determine if action verb can be applied
     //   by default all attributes are false unless overridden by derived noun
     public boolean canEat ()
-        { return false; }
+        { return (attributes&EAT) == EAT; }
     public boolean canTake ()
-        { return true; }
+        { return (attributes&TAKE) == TAKE; }
     public boolean canExamine ()
-        { return true; }
+        { return (attributes&EXAMINE) == EXAMINE; }
     public boolean canOpen ()
-        { return false; }
+        { return (attributes&OPEN) == OPEN; }
 
 }

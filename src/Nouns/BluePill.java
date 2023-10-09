@@ -6,6 +6,8 @@ public class BluePill extends Noun {
     public BluePill() {
 
         super(
+                // attributes
+                EAT | TAKE | EXAMINE,
                 // name
                 "pill",
                 // modifier
@@ -13,9 +15,8 @@ public class BluePill extends Noun {
                 // shortDescription
                 "shortDescription: It's blue",
                 // longDescription
-                "longDescription It's blue");
+                "longDescription It's blue"
+        );
     }
-
-    public boolean canEat ()   { return true; }
 
 }

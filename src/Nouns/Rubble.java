@@ -8,6 +8,8 @@ public class Rubble extends Noun {
     public Rubble() {
 
         super(
+                // attributes
+                EXAMINE,
                 // name
                 "rubble",
                 // modifier
@@ -15,9 +17,8 @@ public class Rubble extends Noun {
                 // shortDescription
                 "shortDescription: It's a nasty pile of rubble",
                 // longDescription
-                "longDescription It's a nasty pile of rubble");
+                "longDescription It's a nasty pile of rubble"
+        );
     }
-
-    public boolean canExamine ()   { return true; }
 
 }

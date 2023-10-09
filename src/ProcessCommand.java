@@ -89,7 +89,7 @@ public class ProcessCommand {
         }
         else if (Action.equals("take")) {
             if (! parser.parseCommandNoun (roomInventory)) {
-                if (! parser.isNounUnique())
+                if (parser.getNoun()!=null && !parser.isNounUnique())
                     System.out.printf("Which %s did you want to take?\n", parser.getNoun().getName());
                 else
                     System.out.println("I don't see that in here.");

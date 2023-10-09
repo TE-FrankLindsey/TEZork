@@ -8,6 +8,8 @@ public class RedApple extends Noun {
     public RedApple() {
 
         super(
+                // attributes
+                EAT | TAKE | EXAMINE,
                 // name
                 "apple",
                 // modifier
@@ -15,8 +17,8 @@ public class RedApple extends Noun {
                 // shortDescription
                 "shortDescription: It's red",
                 // longDescription
-                "longDescription: It's red");
+                "longDescription: It's red"
+        );
     }
 
-    public boolean canEat ()   { return true; }
 }

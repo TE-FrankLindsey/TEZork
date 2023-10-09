@@ -6,6 +6,8 @@ public class Pill extends Noun {
     public Pill () {
 
         super(
+                // attributes
+                EAT | TAKE | EXAMINE,
                 // name
                 "pill",
                 // modifier
@@ -13,9 +15,8 @@ public class Pill extends Noun {
                 // shortDescription
                 "shortDescription: It's a pill",
                 // longDescription
-                "longDescription: It's a pill");
+                "longDescription: It's a pill"
+        );
     }
-
-    public boolean canEat ()   { return true; }
 
 }

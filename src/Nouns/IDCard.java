@@ -8,13 +8,17 @@ public class IDCard extends Noun {
     public IDCard() {
 
         super(
+                // attributes
+                TAKE | EXAMINE,
                 // name
-                "ID card",
+                "card",
                 // modifier
+                "id",
                 // shortDescription
                 "shortDescription: It's an ID card",
                 // longDescription
-                "longDescription It's an ID card");
+                "longDescription It's an ID card"
+        );
     }
 
 }
