@@ -26,7 +26,6 @@ public class Parser {
     public boolean isNounUnique()
         { return rtnStatus==NounStatus.SUCCESS; }
 
-
     private List<Noun> allNouns;
     private List<Verb> allVerbs;
 
@@ -86,12 +85,17 @@ public class Parser {
 
     public void preParseText (String command) {
         this.command = command;
+
+        // prep the command by reducing multiple blanks to single blank and make command lower case
+        while (this.command.contains("  "))
+            this.command = this.command.replace("  ", " ");
+        this.command = this.command.toLowerCase();
+
         parserPtr = 0;
 
         currVerb = null;
         currNoun = null;
     }
-
 
     public boolean parseCommandVerb () {
 
@@ -116,59 +120,8 @@ public class Parser {
             if ((rtnStatus = parseNoun(someNoun)) != NounStatus.FAILURE)
                 break;
 
-        if (rtnStatus == NounStatus.DUPLICATE)
-            System.out.printf("Which %s did you want to %s??\n", currNoun.getName(), currVerb.getName());
-
-        // parse noun
-        System.out.printf("parsed-- %s, %s\n",
-                (currVerb==null) ? "null" : currVerb.getName(),
-                (currNoun==null) ? "null" : currNoun.getDisplayName());
-
         return rtnStatus == NounStatus.SUCCESS;
     }
-
-    /*
-    public boolean parseText (String textIn, List<Noun> myInventory) {
-        this.textIn = textIn;
-        parserPtr = 0;
-
-        allNouns = myInventory;
-
-        // parse out the verb noun pair, clear verb and noun first
-        currVerb = null;
-        currNoun = null;
-        parseVerbNounPair ();
-
-        return currVerb!=null && currNoun!=null;
-    }
-    */
-
-//    private boolean parseVerbNounPair () {
-//
-//        eatBlanks();
-//
-//        // parse verb
-//        for (Verb someVerb : allVerbs)
-//            if (parseVerb(someVerb))
-//                break;
-//
-//        eatBlanks();
-//
-////        NounStatus rtnStatus = NounStatus.FAILURE;
-//        for (Noun someNoun : allNouns)
-//            if ((rtnStatus = parseNoun(someNoun)) != NounStatus.FAILURE)
-//                break;
-//
-//        if (rtnStatus == NounStatus.DUPLICATE)
-//            System.out.printf("Which %s did you want to %s??\n", currNoun.getName(), currVerb.getName());
-//
-//        // parse noun
-//        System.out.printf("parsed-- %s, %s\n",
-//                (currVerb==null) ? "null" : currVerb.getName(),
-//                (currNoun==null) ? "null" : currNoun.getDisplayName());
-//
-//        return true;
-//    }
 
     private boolean parseVerb (Verb someVerb) {
 
@@ -183,7 +136,6 @@ public class Parser {
 
         return false;
     }
-
 
     private NounStatus parseNoun (Noun someNoun) {
 

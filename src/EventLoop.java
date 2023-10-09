@@ -25,12 +25,13 @@ public class EventLoop {
 
             System.out.print(">>");
             String textIn = userInput.nextLine();
-            System.out.printf(">>%s<<\n", textIn);
+//            System.out.printf(">>%s<<\n", textIn);
             if (textIn.equals("q")) {
 //                System.out.printf(">>%s<<\n", textIn);
                 return;
             }
             processCommand.runCommand(textIn);
+            System.out.println("");
 
         }
     }

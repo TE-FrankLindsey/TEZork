@@ -22,120 +22,56 @@ public class ProcessCommand {
 
     public void runCommand (String Command) {
 
-//        parser.parseText(Command, allInventory);
+        parser.preParseText(Command);
 
-
-parser.preParseText(Command);
-if (! parser.parseCommandVerb ()) {
-    System.out.println("I don't understand what you mean.");
-    return;
-}
-Verb currVerb = parser.getVerb();
-//parser.parseCommandNoun (allInventory);
-
-// process single verb commands
-if (currVerb == null) {
-    System.out.println("I did not understand that command.");
-    return;
-}
-else if (currVerb.getName().equals("inventory")) {
-
-    String stuff = "You are carrying: ";
-    if (myInventory==null || myInventory.size()==0)
-        stuff += "nothing";
-    else
-        for (int i = 0; i != myInventory.size(); i++) {
-            if (i > 0)
-                stuff += ", ";
-            stuff += myInventory.get(i).getDisplayName();
+        // try to find verb in user submitted command
+        if (! parser.parseCommandVerb ()) {
+            System.out.println("I don't understand what you mean.");
+            return;
         }
-    System.out.println(stuff);
-    return;
-}
+        Verb currVerb = parser.getVerb();
 
-else if (currVerb.getName().equals("look")) {
-
-    String stuff = "The room contains: ";
-    if (roomInventory == null || roomInventory.size() == 0)
-        stuff += "nothing";
-    else
-        for (int i = 0; i != roomInventory.size(); i++) {
-            if (i > 0)
-                stuff += ", ";
-            stuff += roomInventory.get(i).getDisplayName();
-        }
-    System.out.println(stuff);
-    return;
-}
-
-/*
-        Noun currNoun = parser.getNoun();
-//        Verb currVerb = parser.getVerb();
-
-        // display messages for failed parse operation
-        if (currNoun!=null && currVerb==null) {
-            System.out.printf("What should I do with the %s?\n", currNoun.getDisplayName());
+        // process single verb commands
+        if (currVerb == null) {
+            System.out.println("I did not understand that command.");
             return;
         }
 
-        else if (currVerb!=null && currNoun==null) {
+        // Inventory
+        else if (currVerb.getName().equals("inventory")) {
 
-            if (currVerb.getName().equals("inventory")) {
-
-                String stuff = "You are carrying: ";
-                if (myInventory==null || myInventory.size()==0)
-                    stuff += "nothing";
-                else
-                    for (int i = 0; i != myInventory.size(); i++) {
-                        if (i > 0)
-                            stuff += ", ";
-                        stuff += myInventory.get(i).getDisplayName();
-                    }
-                System.out.println(stuff);
-            }
-
-            else if (currVerb.getName().equals("look")) {
-
-                String stuff = "The room contains: ";
-                if (roomInventory==null || roomInventory.size()==0)
-                    stuff += "nothing";
-                else
-                    for (int i=0; i!=roomInventory.size(); i++) {
-                        if (i>0)
-                            stuff += ", ";
-                        stuff += roomInventory.get(i).getDisplayName();
+            String stuff = "You are carrying: ";
+            if (myInventory==null || myInventory.size()==0)
+                stuff += "nothing";
+            else
+                for (int i = 0; i != myInventory.size(); i++) {
+                    if (i > 0)
+                        stuff += ", ";
+                    stuff += myInventory.get(i).getDisplayName();
                 }
-                System.out.println(stuff);
-
-                stuff = "The allInventory contains: ";
-                if (allInventory==null || allInventory.size()==0)
-                    stuff += "nothing";
-                else
-                    for (int i=0; i!=allInventory.size(); i++) {
-                        if (i>0)
-                            stuff += ", ";
-                        stuff += allInventory.get(i).getDisplayName();
-                    }
-                System.out.println(stuff);
-            }
-            else {
-                System.out.printf("What did you want me to %s?\n", currVerb.getName());
-                return;
-            }
+            System.out.println(stuff);
+            return;
         }
-        */
 
-//        if (currVerb == null) {
-//            System.out.println("I did not understand that command.");
-//            return;
-//        }
+        // Look
+        else if (currVerb.getName().equals("look")) {
 
+            String stuff = "The room contains: ";
+            if (roomInventory == null || roomInventory.size() == 0)
+                stuff += "nothing";
+            else
+                for (int i = 0; i != roomInventory.size(); i++) {
+                    if (i > 0)
+                        stuff += ", ";
+                    stuff += roomInventory.get(i).getDisplayName();
+                }
+            System.out.println(stuff);
+            return;
+        }
+
+        // process verb / noun commands
+        
         String Action = currVerb.getName();
-
-//        if (currNoun!=null && !parser.isNounUnique()) {
-//            System.out.printf("Which %s do you want to %s?", currNoun.getDisplayName(), currVerb.getDescription());
-//            return;
-//        }
 
         if (Action.equals("eat")) {
 
@@ -152,9 +88,12 @@ else if (currVerb.getName().equals("look")) {
             }
         }
         else if (Action.equals("take")) {
-
-            if (! parser.parseCommandNoun (roomInventory))
-                System.out.println("I don't see that in here.");
+            if (! parser.parseCommandNoun (roomInventory)) {
+                if (! parser.isNounUnique())
+                    System.out.printf("Which %s did you want to take?\n", parser.getNoun().getName());
+                else
+                    System.out.println("I don't see that in here.");
+            }
             else {
                 Noun currNoun = parser.getNoun();
                 if (currNoun.canTake()) {
