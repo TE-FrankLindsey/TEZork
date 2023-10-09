@@ -7,17 +7,14 @@ public class Take extends Verb {
     public Take () {
 
         super(
-                // name
-                "take",
+            // name
+            "take",
 
-                // synonyms
-                new String[]{"take", "grab", "get", "pickup", "pick up", "purchase"},
-
-                // shortDescription
-                "shortDescription: action verb take",
-
-                // longDescription
-                "longDescription: action verb take");
+            // synonyms
+            new String[]{"take", "grab", "get", "hold", "pickup", "pick up", "purchase"}
+        );
     }
 
+    public String getCannotMessage ()
+        { return "I cannot take that!"; }
 }

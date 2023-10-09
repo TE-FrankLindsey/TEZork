@@ -16,4 +16,6 @@ public class RedPill extends Noun {
                 "longDescription: It's red");
     }
 
+    public boolean canEat ()   { return true; }
+
 }

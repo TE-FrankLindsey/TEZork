@@ -18,4 +18,5 @@ public class RedApple extends Noun {
                 "longDescription: It's red");
     }
 
+    public boolean canEat ()   { return true; }
 }

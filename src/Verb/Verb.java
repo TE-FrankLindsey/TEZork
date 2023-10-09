@@ -18,11 +18,13 @@ public abstract class Verb extends SyntaxElement {
         return synonyms[x];
     }
 
-    public Verb(String name, String[] synonyms, String shortDesc, String longDesc) {
-        super(shortDesc, longDesc);
+    public Verb(String name, String[] synonyms) {
         this.name = name;
         this.synonyms = synonyms;
     }
+
+    public abstract String getCannotMessage ();
+
 
     // textIn passed in is substring from user command, starting at current parse ptr to EOL
     //  substring as much textIn as needed to compare to synonym string

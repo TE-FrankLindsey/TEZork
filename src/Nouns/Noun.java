@@ -34,4 +34,16 @@ public abstract class Noun extends SyntaxElement {
         this.modifier = null;
     }
 
+
+    // attributes to determine if action verb can be applied
+    //   by default all attributes are false unless overridden by derived noun
+    public boolean canEat ()
+        { return false; }
+    public boolean canTake ()
+        { return true; }
+    public boolean canExamine ()
+        { return true; }
+    public boolean canOpen ()
+        { return false; }
+
 }

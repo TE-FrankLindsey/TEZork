@@ -7,17 +7,15 @@ public class Open extends Verb {
     public Open() {
 
         super(
-                // name
-                "open",
+            // name
+            "open",
 
-                // synonyms
-                new String[]{"open", "pry open", "force open"},
-
-                // shortDescription
-                "shortDescription: action verb examine",
-
-                // longDescription
-                "longDescription: action verb examine");
+            // synonyms
+            new String[]{"open", "pry open", "force open"}
+        );
     }
+
+    public String getCannotMessage ()
+        { return "I cannot open that!"; }
 
 }
