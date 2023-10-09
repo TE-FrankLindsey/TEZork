@@ -16,4 +16,6 @@ public class BluePill extends Noun {
                 "longDescription It's blue");
     }
 
+    public boolean canEat ()   { return true; }
+
 }

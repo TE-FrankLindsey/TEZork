@@ -23,4 +23,9 @@ public abstract class SyntaxElement {
        this.shortDescription = shortDescription;
        this.longDescription = longDescription;
     }
+    protected  SyntaxElement () {
+       this.shortDescription = null;
+       this.longDescription = null;
+    }
+
 }

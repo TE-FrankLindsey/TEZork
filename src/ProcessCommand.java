@@ -22,9 +22,55 @@ public class ProcessCommand {
 
     public void runCommand (String Command) {
 
-        parser.parseText(Command, allInventory);
+//        parser.parseText(Command, allInventory);
+
+
+parser.preParseText(Command);
+if (! parser.parseCommandVerb ()) {
+    System.out.println("I don't understand what you mean.");
+    return;
+}
+Verb currVerb = parser.getVerb();
+//parser.parseCommandNoun (allInventory);
+
+// process single verb commands
+if (currVerb == null) {
+    System.out.println("I did not understand that command.");
+    return;
+}
+else if (currVerb.getName().equals("inventory")) {
+
+    String stuff = "You are carrying: ";
+    if (myInventory==null || myInventory.size()==0)
+        stuff += "nothing";
+    else
+        for (int i = 0; i != myInventory.size(); i++) {
+            if (i > 0)
+                stuff += ", ";
+            stuff += myInventory.get(i).getDisplayName();
+        }
+    System.out.println(stuff);
+    return;
+}
+
+else if (currVerb.getName().equals("look")) {
+
+    String stuff = "The room contains: ";
+    if (roomInventory == null || roomInventory.size() == 0)
+        stuff += "nothing";
+    else
+        for (int i = 0; i != roomInventory.size(); i++) {
+            if (i > 0)
+                stuff += ", ";
+            stuff += roomInventory.get(i).getDisplayName();
+        }
+    System.out.println(stuff);
+    return;
+}
+
+/*
         Noun currNoun = parser.getNoun();
-        Verb currVerb = parser.getVerb();
+//        Verb currVerb = parser.getVerb();
 
         // display messages for failed parse operation
         if (currNoun!=null && currVerb==null) {
@@ -77,57 +123,81 @@ public class ProcessCommand {
                 return;
             }
         }
+        */
 
-        else if (currVerb==null && currNoun==null) {
-            System.out.println("I did not understand that command.");
-            return;
-        }
+//        if (currVerb == null) {
+//            System.out.println("I did not understand that command.");
+//            return;
+//        }
 
         String Action = currVerb.getName();
 
-        if (! parser.isNounUnique()) {
-            System.out.printf("Which %s do you want to %s?", currNoun.getDisplayName(), currVerb.getDescription());
-            return;
-        }
+//        if (currNoun!=null && !parser.isNounUnique()) {
+//            System.out.printf("Which %s do you want to %s?", currNoun.getDisplayName(), currVerb.getDescription());
+//            return;
+//        }
 
         if (Action.equals("eat")) {
-            if (currNoun.canEat()) {
-                System.out.printf("Yum!  My favorite, a big %s.\n", currNoun.getDisplayName());
+
+            if (! parser.parseCommandNoun (myInventory))
+                System.out.printf("What did you want me to %s?\n", currVerb.getName());
+            else {
+                Noun currNoun = parser.getNoun();
+                if (currNoun.canEat()) {
+                    System.out.printf("Yum!  My favorite, a big %s.\n", currNoun.getDisplayName());
+                    myInventory.remove(currNoun);
+                }
+                else
+                    System.out.println("I don't think you can eat that.");
             }
-            else
-                System.out.println("I don't think I'll eat that");
         }
         else if (Action.equals("take")) {
-            if (currNoun.canTake()) {
-                System.out.printf("You now have the %s.\n", currNoun.getDisplayName());
-                myInventory.add(currNoun);
-                roomInventory.remove(currNoun);
+
+            if (! parser.parseCommandNoun (roomInventory))
+                System.out.println("I don't see that in here.");
+            else {
+                Noun currNoun = parser.getNoun();
+                if (currNoun.canTake()) {
+                    System.out.printf("You now have the %s.\n", currNoun.getDisplayName());
+                    myInventory.add(currNoun);
+                    roomInventory.remove(currNoun);
+                } else
+                    System.out.println("I'm not picking that up!");
             }
-            else
-                System.out.println("I'm not picking that up!");
         }
         else if (Action.equals("drop")) {
-//            if (currNoun.canDrop()) {
+
+            if (! parser.parseCommandNoun (myInventory))
+                System.out.println("you're not holding that.");
+            else {
+                Noun currNoun = parser.getNoun();
                 System.out.printf("you drop the %s.\n", currNoun.getDisplayName());
                 myInventory.remove(currNoun);
                 roomInventory.add(currNoun);
-//            }
-//            else
-//                System.out.println("I'm not picking that up!");
+            }
         }
         else if (Action.equals("examine")) {
-            if (currNoun.canExamine()) {
-                System.out.println(currNoun.getDescription());
+
+            if (! parser.parseCommandNoun (myInventory))
+                System.out.println("you're not holding that.");
+            else {
+                Noun currNoun = parser.getNoun();
+                if (currNoun.canExamine())
+                    System.out.println(currNoun.getDescription());
             }
         }
         else if (Action.equals("open")) {
-            if (currNoun.canExamine()) {
-                System.out.println(currNoun.getDescription());
-            }
-            else
-                System.out.printf("Hard as you try you cannot open the %s\n", currNoun.getDisplayName());
-        }
 
+            if (!parser.parseCommandNoun(myInventory))
+                System.out.println("you're not holding that.");
+            else {
+                Noun currNoun = parser.getNoun();
+                if (currNoun.canOpen()) {
+                    System.out.println(currNoun.getDescription());
+                } else
+                    System.out.printf("Hard as you try you cannot open the %s\n", currNoun.getDisplayName());
+            }
+        }
     }
 
 

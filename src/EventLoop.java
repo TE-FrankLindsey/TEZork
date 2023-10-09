@@ -1,10 +1,6 @@
 
 import ParseGroup.Parser;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class EventLoop {
@@ -23,17 +19,18 @@ public class EventLoop {
 
     public void RunGame () {
         Parser parser = new Parser ();
+        ProcessCommand processCommand = new ProcessCommand();
 
         for (boolean keepGoing=true; keepGoing; ) {
 
-            System.out.println("??!");
+            System.out.print(">>");
             String textIn = userInput.nextLine();
             System.out.printf(">>%s<<\n", textIn);
             if (textIn.equals("q")) {
 //                System.out.printf(">>%s<<\n", textIn);
                 return;
             }
-            parser.parseText(textIn);
+            processCommand.runCommand(textIn);
 
         }
     }

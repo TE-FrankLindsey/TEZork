@@ -16,4 +16,6 @@ public class Pill extends Noun {
                 "longDescription: It's a pill");
     }
 
+    public boolean canEat ()   { return true; }
+
 }

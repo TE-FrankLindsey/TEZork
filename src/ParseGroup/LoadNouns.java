@@ -15,6 +15,7 @@ public class LoadNouns {
         nounList.add (new BluePill());
         nounList.add (new RedApple());
         nounList.add (new BlueApple());
+        nounList.add (new Rubble());
 
         return nounList;
     }
