@@ -1,19 +1,22 @@
 package Verb;
 
+import Nouns.Noun;
+
 public class Inventory extends Verb {
 
     public Inventory() {
 
         super(
-            // name
-            "inventory",
+                // name
+                "inventory",
 
-            // synonyms
-            new String[]{"inventory", "list"}
+                // synonyms
+                new String[]{"inventory", "list"}
         );
     }
 
-    public String getCannotMessage ()
-        { return "I'm not holding anything!"; }
+    public void runCommand(Noun noun, String prepNoun, Nouns.Inventory myInventory, Nouns.Inventory roomInventory) {
 
+        System.out.println("You are carrying: " + myInventory.getList() + ".");
+    }
 }

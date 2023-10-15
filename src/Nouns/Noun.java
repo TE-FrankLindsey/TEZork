@@ -4,14 +4,17 @@ import SyntaxElement.SyntaxElement;
 
 public abstract class Noun extends SyntaxElement {
 
-    protected final String modifier;
+    protected String modifier;
     protected final String name;
+    protected boolean ambiguous;
 
     protected final static int EAT = 1;
     protected final static int TAKE = 2;
-    protected final static int EXAMINE = 4;
+    protected final static int TALK = 4;
     protected final static int OPEN = 8;
-
+    protected final static int TOUCH = 16;
+    protected final static int FILL = 32;
+    protected final static int POUR = 64;
     protected int attributes;
 
     public String getModifier()
@@ -20,8 +23,16 @@ public abstract class Noun extends SyntaxElement {
     public String getName()
         { return name; }
 
+    public boolean isAmbiguous() {
+        return ambiguous;
+    }
+
+    public void setAmbiguous(boolean ambiguous) {
+        this.ambiguous = ambiguous;
+    }
+
     public String getDisplayName()
-        { return (modifier!=null) ? String.format("%s %s", modifier, name) : name; }
+        { return (modifier!=null && !modifier.equals("")) ? String.format("%s %s", modifier, name) : name; }
 
     public Noun () {
         super("", "");
@@ -44,6 +55,32 @@ public abstract class Noun extends SyntaxElement {
         this.modifier = null;
     }
 
+    public boolean equals (Noun noun) {
+        if (! this.modifier.equals (noun.modifier))
+            return false;
+
+        if (! this.name.equals (noun.name))
+            return false;
+
+        return true;
+    }
+
+    public boolean nameEquals (Noun noun) {
+        if (! this.name.equals (noun.name))
+            return false;
+
+        return true;
+    }
+
+    public boolean nameEquals (String modifier, String name) {
+        if (modifier.isBlank() && this.name.equals(name))
+            return true;
+
+        if (this.modifier.equals(modifier) && this.name.equals(name))
+            return true;
+
+        return false;
+    }
 
     // attributes to determine if action verb can be applied
     //   by default all attributes are false unless overridden by derived noun
@@ -51,11 +88,41 @@ public abstract class Noun extends SyntaxElement {
         { return (attributes&EAT) == EAT; }
     public boolean canTake ()
         { return (attributes&TAKE) == TAKE; }
-    public boolean canExamine ()
-        { return (attributes&EXAMINE) == EXAMINE; }
+    public boolean canTalk ()
+        { return (attributes&TALK) == TALK; }
     public boolean canOpen ()
         { return (attributes&OPEN) == OPEN; }
 
+
+    //
+    // override messages best handled by the nouns involved instead of the verbs
+
+    public String examineMsg(String defaultMsg)
+        { return defaultMsg; }
+
+    public String takeMsg(String defaultMsg)
+        { return defaultMsg; }
+
+    public String touchMsg(String defaultMsg)
+        { return defaultMsg; }
+
+    //
+    // override actions best handled by the nouns involved instead of the verbs
+
+    public boolean take(Inventory myInventory, Inventory roomInventory)
+        { return false; }
+
+    public void examine(Inventory myInventory, Inventory roomInventory)
+        { }
+
+    public boolean talk(String prepNoun, Inventory inventory)
+        { return false; }
+
+    public boolean open(String prepNoun, Inventory myInventory)
+        { return false; }
+
+    public boolean fill(String prepNoun, Inventory myInventory)
+        { return false; }
 
     // room support - move out to "Room" class soon as possible
 

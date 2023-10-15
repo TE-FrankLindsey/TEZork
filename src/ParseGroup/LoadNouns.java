@@ -17,6 +17,8 @@ public class LoadNouns {
         nounList.add (new BlueApple());
         nounList.add (new Rubble());
         nounList.add (new IDCard());
+        nounList.add (new Water());
+        nounList.add (new Condom());
 
         return nounList;
     }

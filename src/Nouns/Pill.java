@@ -7,7 +7,7 @@ public class Pill extends Noun {
 
         super(
                 // attributes
-                EAT | TAKE | EXAMINE,
+                EAT | TAKE,
                 // name
                 "pill",
                 // modifier

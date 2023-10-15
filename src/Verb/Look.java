@@ -1,5 +1,8 @@
 package Verb;
 
+import Nouns.Inventory;
+import Nouns.Noun;
+
 public class Look extends Verb {
 
     public Look() {
@@ -13,6 +16,7 @@ public class Look extends Verb {
         );
     }
 
-    public String getCannotMessage ()
-        { return "I cannot drop that!"; }
+    public void runCommand(Noun noun, String prepNoun, Inventory myInventory, Inventory roomInventory) {
+        System.out.println("You see around you: " + roomInventory.getList());
+    }
 }

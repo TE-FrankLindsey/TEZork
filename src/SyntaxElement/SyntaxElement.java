@@ -2,8 +2,8 @@ package SyntaxElement;
 
 public abstract class SyntaxElement {
 
-    private final String shortDescription;
-    private final String longDescription;
+    protected String shortDescription;
+    protected String longDescription;
     private boolean visited = false;
 
     public String getLongDescription () {

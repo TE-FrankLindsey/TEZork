@@ -9,7 +9,7 @@ public class IDCard extends Noun {
 
         super(
                 // attributes
-                TAKE | EXAMINE,
+                TAKE,
                 // name
                 "card",
                 // modifier
@@ -20,5 +20,11 @@ public class IDCard extends Noun {
                 "longDescription It's an ID card"
         );
     }
+
+        public void examine() {
+            System.out.println("Looks like this could be used to open a door!");
+        }
+
+
 
 }

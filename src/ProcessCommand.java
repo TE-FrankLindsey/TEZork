@@ -1,156 +1,93 @@
+import Nouns.Inventory;
 import Nouns.Noun;
 import Verb.Verb;
-import ParseGroup.LoadNouns;
 import ParseGroup.Parser;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ProcessCommand {
 
-    public List<Noun> allInventory;
-    public List<Noun> myInventory = new ArrayList<>();
-    public List<Noun> roomInventory = new ArrayList<>();
-    public List<Noun> directionInventory = new ArrayList<>();
+//    public List<Noun> allInventory;
+//    public List<Noun> myInventory = new ArrayList<>();
+    public Inventory myInventory = new Inventory();
+    public Inventory roomInventory = new Inventory();
+    public Inventory directionInventory = new Inventory();
+
+//    public List<Noun> roomInventory = new ArrayList<>();
+//    public List<Noun> directionInventory = new ArrayList<>();
     private Parser parser;
+
+//    private Inventory xInventory = new Inventory();
 
     public ProcessCommand () {
 
-        allInventory = LoadNouns.load();
-        roomInventory.addAll(allInventory);
-        directionInventory = LoadNouns.loadDirections();
+        roomInventory.loadNouns();
+        directionInventory.loadDirections();
         parser = new Parser ();
+
+        String xx = roomInventory.getList();
+        String xxx = roomInventory.getList();
     }
 
+    //
+    // Parse out the VERB and NOUN from the command and act on those
+    //
     public void runCommand (String Command) {
 
+        // clean up the input some
         parser.preParseText(Command);
 
-        // try to find verb in user submitted command
-        if (! parser.parseCommandVerb ()) {
-            System.out.println("I don't understand what you mean.");
+    //
+    // try to find verb in user submitted command
+    //
+        if (!parser.parseCommandVerb() || parser.getVerb()==null) {
+            System.out.println("I don't understand that command.\n");
             return;
         }
         Verb currVerb = parser.getVerb();
 
-        // process single verb commands
-        if (currVerb == null) {
-            System.out.println("I did not understand that command.");
-            return;
-        }
+    //
+    // process all 'verb only' commands
+    //
 
         // Inventory
-        else if (currVerb.getName().equals("inventory")) {
-
-            String stuff = "You are carrying: ";
-            if (myInventory==null || myInventory.size()==0)
-                stuff += "nothing";
-            else
-                for (int i = 0; i != myInventory.size(); i++) {
-                    if (i > 0)
-                        stuff += ", ";
-                    stuff += myInventory.get(i).getDisplayName();
-                }
-            System.out.println(stuff);
+        if (currVerb.getName().equals("inventory")) {
+            currVerb.runCommand(null, "", myInventory, roomInventory);
             return;
         }
 
         // Look
         else if (currVerb.getName().equals("look")) {
-
-            String stuff = "You see around you: ";
-            if (roomInventory == null || roomInventory.size() == 0)
-                stuff += "nothing";
-            else
-                for (int i = 0; i != roomInventory.size(); i++) {
-                    if (i > 0)
-                        stuff += ", ";
-                    stuff += roomInventory.get(i).getDisplayName();
-                }
-            System.out.println(stuff);
+            currVerb.runCommand(null, "", myInventory, roomInventory);
             return;
         }
 
-        // process verb / noun commands
-        
-        String Action = currVerb.getName();
+    //
+    // process verb / noun commands
+    //
 
-        if (Action.equals("eat")) {
+        if (currVerb.whichInventory() == Verb.inventorySpec.MY)
+            parser.parseCommandNoun(myInventory);
+        else if (currVerb.whichInventory() == Verb.inventorySpec.ROOM)
+            parser.parseCommandNoun(roomInventory);
+        else if (! parser.parseCommandNoun(myInventory))
+            parser.parseCommandNoun(roomInventory);
 
-            if (! parser.parseCommandNoun (myInventory))
-                System.out.printf("What did you want me to %s?\n", currVerb.getName());
-            else {
-                Noun currNoun = parser.getNoun();
-                if (currNoun.canEat()) {
-                    System.out.printf("Yum!  My favorite, a big %s.\n", currNoun.getDisplayName());
-                    myInventory.remove(currNoun);
-                }
-                else
-                    System.out.println("I don't think you can eat that.");
-            }
-        }
-        else if (Action.equals("take")) {
-            if (! parser.parseCommandNoun (roomInventory)) {
-                if (parser.getNoun()!=null && !parser.isNounUnique())
-                    System.out.printf("Which %s did you want to take?\n", parser.getNoun().getName());
-                else
-                    System.out.println("I don't see that in here.");
-            }
-            else {
-                Noun currNoun = parser.getNoun();
-                if (currNoun.canTake()) {
-                    System.out.printf("You now have the %s.\n", currNoun.getDisplayName());
-                    myInventory.add(currNoun);
-                    roomInventory.remove(currNoun);
-                } else
-                    System.out.println("I'm not picking that up!");
-            }
-        }
-        else if (Action.equals("drop")) {
+        Noun currNoun = parser.getNoun();
 
-            if (! parser.parseCommandNoun (myInventory))
-                System.out.println("you're not holding that.");
-            else {
-                Noun currNoun = parser.getNoun();
-                System.out.printf("you drop the %s.\n", currNoun.getDisplayName());
-                myInventory.remove(currNoun);
-                roomInventory.add(currNoun);
-            }
-        }
-        else if (Action.equals("examine")) {
-
-            if (! parser.parseCommandNoun (myInventory))
-                System.out.println("you're not holding that.");
-            else {
-                Noun currNoun = parser.getNoun();
-                if (currNoun.canExamine())
-                    System.out.println(currNoun.getDescription());
-            }
-        }
-        else if (Action.equals("open")) {
-
-            if (!parser.parseCommandNoun(myInventory))
-                System.out.println("you're not holding that.");
-            else {
-                Noun currNoun = parser.getNoun();
-                if (currNoun.canOpen()) {
-                    System.out.println(currNoun.getDescription());
-                } else
-                    System.out.printf("Hard as you try you cannot open the %s\n", currNoun.getDisplayName());
-            }
+        String prepNoun = "";
+        if (parser.parsePrepPhrase (myInventory)) {
+            prepNoun = parser.getPrepNoun();
         }
 
-        else if (Action.equals("go")) {
-
-        }
+        currVerb.runCommand(currNoun, prepNoun, myInventory, roomInventory);
 
 
+/*
         if (! parser.parseCommandNoun(directionInventory)) {
-            System.out.println("GO TO HELL");
+            System.out.println("go direction...");
         }
         else
-            System.out.printf("GO TO %s\n", parser.getNoun().getName());
+            System.out.printf("go direction %s\n", parser.getNoun().getName());
+*/
     }
-
 
 }

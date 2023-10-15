@@ -7,7 +7,7 @@ public class BlueApple extends Noun {
 
         super(
                 // attributes
-                EAT | TAKE | EXAMINE,
+                EAT | TAKE,
                 // name
                 "apple",
                 // modifier

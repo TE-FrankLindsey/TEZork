@@ -1,6 +1,7 @@
 package ParseGroup;
 
 
+import Nouns.Inventory;
 import Nouns.Noun;
 import Verb.Verb;
 
@@ -13,8 +14,9 @@ public class Parser {
     protected Verb currVerb = null;
 
     protected Noun currNoun = null;
+    protected String prepNoun = "";
 
-    protected enum NounStatus {SUCCESS, FAILURE, DUPLICATE;}
+    protected enum NounStatus {SUCCESS, FAILURE;}
     NounStatus rtnStatus = NounStatus.FAILURE;
 
     public Verb getVerb()
@@ -23,10 +25,14 @@ public class Parser {
     public Noun getNoun()
         { return currNoun; }
 
+    public String getPrepNoun()
+        { return prepNoun; }
+
     public boolean isNounUnique()
         { return rtnStatus==NounStatus.SUCCESS; }
 
-    private List<Noun> allNouns;
+    private Inventory inventory;
+//    private List<Noun> allNouns;
     private List<Verb> allVerbs;
 
     public Parser () {
@@ -77,6 +83,7 @@ public class Parser {
             } else if (eatSubString("a ")) {
             } else if (eatSubString("an ")) {
             } else if (eatSubString("to ")) {
+            } else if (eatSubString("of ")) {
             } else if (eatSubString("the ")) {
             } else {
                 keepGoing = false;
@@ -110,18 +117,17 @@ public class Parser {
         return currVerb!=null;
     }
 
-    public boolean parseCommandNoun (List<Noun> myInventory) {
+    public boolean parseCommandNoun (Inventory myInventory) {
 
-        allNouns = myInventory;
+        inventory = myInventory;
         eatBlanks();
         rtnStatus = NounStatus.FAILURE;
 
-        // match nouns until there is a successful match or duplicate matches
-        for (Noun someNoun : allNouns)
-            if ((rtnStatus = parseNoun(someNoun)) != NounStatus.FAILURE)
-                break;
+        for (int i=0; i!=myInventory.getSize(); i++)
+            if ((rtnStatus = parseNoun(myInventory.getItem(i))) == NounStatus.SUCCESS)
+                return true;
 
-        return rtnStatus == NounStatus.SUCCESS;
+        return false;
     }
 
     private boolean parseVerb (Verb someVerb) {
@@ -139,8 +145,9 @@ public class Parser {
     }
 
     private NounStatus parseNoun (Noun someNoun) {
+        someNoun.setAmbiguous(false);
 
-        // save the parser pointer in order to restore following failure
+        // save the parser pointer, on parse failure set parse pointer back to previous position
         int tmpParserPtr = parserPtr;
 
         // if modifier and name match then return true
@@ -157,10 +164,9 @@ public class Parser {
 
             currNoun = someNoun;
 
-            // test for uniqueness
-            if (! isNounUnique(currNoun))
-                return NounStatus.DUPLICATE;
-            
+            // flag noun uniqueness
+            inventory.markNounAmbiguous(currNoun);
+
             return NounStatus.SUCCESS;
         }
 
@@ -169,16 +175,32 @@ public class Parser {
         return NounStatus.FAILURE;
     }
 
-    private boolean isNounUnique (Noun noun) {
+    public boolean parsePrepPhrase (Inventory inventory) {
 
-        int nounCount = 0;
-        for (Noun someNoun : allNouns)
-            if (someNoun.getName().equals(noun.getName())) {
-                if (++nounCount > 1)
-                    return false;
+        prepNoun = null;
+
+        eatBlanks();
+
+        if (eatSubString("with ")) {
+        } else if (eatSubString("using ")) {
+        } else if (eatSubString("into ")) {
+        } else if (eatSubString("from ")) {
+        } else if (eatSubString("about ")) {
+        }
+        else
+            return false;
+
+        eatBlanks();
+
+        prepNoun = "";
+        String[] prepNouns = {"condom", "id card", "card", "water"};
+        for (String someNoun : prepNouns)
+            if (eatSubString(someNoun)) {
+                prepNoun = someNoun;
+                return true;
             }
 
-        return true;
+        return false;
     }
 
 }

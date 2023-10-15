@@ -1,11 +1,18 @@
 package Verb;
 
+import Nouns.Inventory;
+import Nouns.Noun;
 import SyntaxElement.SyntaxElement;
 
 public abstract class Verb extends SyntaxElement {
 
     protected final String name;
     protected String[] synonyms;
+
+    public enum inventorySpec {MY, ROOM, ANY};
+
+    public inventorySpec whichInventory()
+        { return inventorySpec.MY; }
 
     public String getName()
         { return name; }
@@ -23,7 +30,8 @@ public abstract class Verb extends SyntaxElement {
         this.synonyms = synonyms;
     }
 
-    public abstract String getCannotMessage ();
+//    public abstract String getCannotMessage ();
+    public abstract void runCommand(Noun noun, String prepNoun, Inventory myInventory, Inventory roomInventory);
 
 
     // textIn passed in is substring from user command, starting at current parse ptr to EOL
