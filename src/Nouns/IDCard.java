@@ -21,10 +21,8 @@ public class IDCard extends Noun {
         );
     }
 
-        public void examine() {
-            System.out.println("Looks like this could be used to open a door!");
-        }
-
-
+    public void examine() {
+        System.out.println("Looks like this could be used to open a door!");
+    }
 
 }

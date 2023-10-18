@@ -1,8 +1,6 @@
 package Nouns;
 
 
-import Nouns.Noun;
-
 public class Rubble extends Noun {
 
     public Rubble() {
@@ -27,7 +25,7 @@ public class Rubble extends Noun {
         String msg = "Looks like a dirty collection of scraps and debris.\n";
         if (ornateEgg == null)
             msg += "There is a glint of something in the rubble, looks like an ornate egg!\n" +
-                "...gold plated and jewel encrusted!\nThe egg dislodged from the rubble.";
+                "...gold plated and jewel encrusted!\nThe egg dislodges from the rubble.";
         else
             msg += "Which once held an ornate egg.";
 
@@ -37,7 +35,7 @@ public class Rubble extends Noun {
     public String touchMsg(String defaultMsg)
         { return "Nope, not touching that.  Too nasty!"; }
 
-    public void examine (Inventory myInventory, Inventory roomInventory) {
+    public void examine (NounInventory myInventory, NounInventory roomInventory) {
         if (ornateEgg == null) {
             ornateEgg = new OrnateEgg();
             roomInventory.addItem(ornateEgg);

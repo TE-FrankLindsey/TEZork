@@ -1,10 +1,11 @@
 package Verb;
 
 import Nouns.Noun;
+import Nouns.NounInventory;
 
-public class Inventory extends Verb {
+public class VerbInventory extends Verb {
 
-    public Inventory() {
+    public VerbInventory() {
 
         super(
                 // name
@@ -15,7 +16,7 @@ public class Inventory extends Verb {
         );
     }
 
-    public void runCommand(Noun noun, String prepNoun, Nouns.Inventory myInventory, Nouns.Inventory roomInventory) {
+    public void runCommand(Noun noun, String prepNoun, NounInventory myInventory, NounInventory roomInventory) {
 
         System.out.println("You are carrying: " + myInventory.getList() + ".");
     }

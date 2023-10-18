@@ -31,9 +31,9 @@ public class Condom extends Noun {
                 // modifier
                 modifier,
                 // shortDescription
-                "Could hold some water.",
+                "Can hold some water.",
                 // longDescription
-                "Looks like it could hold some water."
+                "Looks like it can hold some water."
         );
     }
 
@@ -41,7 +41,7 @@ public class Condom extends Noun {
         System.out.println(getDescription());
     }
 
-    public boolean fill(String prepNoun, Inventory roomInventory) {
+    public boolean fill(String prepNoun, NounInventory roomInventory) {
         if (prepNoun.equals("water") && roomInventory.contains("water", "fountain")) {
             shortDescription = "Water filled condom.";
             longDescription = "Water filled condom.";

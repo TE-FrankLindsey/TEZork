@@ -1,6 +1,6 @@
 package Verb;
 
-import Nouns.Inventory;
+import Nouns.NounInventory;
 import Nouns.Noun;
 
 public class Eat extends Verb {
@@ -16,7 +16,7 @@ public class Eat extends Verb {
         );
     }
 
-    public void runCommand(Noun noun, String prepNoun, Inventory myInventory, Inventory roomInventory) {
+    public void runCommand(Noun noun, String prepNoun, NounInventory myInventory, NounInventory roomInventory) {
         if (noun == null) {
             System.out.println("I don't have one of those.");
             return;

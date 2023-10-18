@@ -20,7 +20,7 @@ public class OrnateEgg extends Noun {
     }
 
 
-    public boolean take(Inventory myInventory, Inventory roomInventory) {
+    public boolean take(NounInventory myInventory, NounInventory roomInventory) {
         myInventory.addItem(new BottleCap());
         roomInventory.removeItem(this);
         roomInventory.addItem(new IDCard());

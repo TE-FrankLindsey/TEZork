@@ -7,22 +7,30 @@ public class WaterFountain extends Noun {
 
         super(
                 // attributes
-                0,
+                TAKE,
                 // name
                 "fountain",
                 // modifier
                 "water",
                 // shortDescription
-                "shortDescription: it squirts water",
+                "It squirts cool, clear water.",
                 // longDescription
-                "longDescription it squirts water"
+                "Bright shiny water dispensing cool, clear water."
         );
     }
 
 
     public void examine() {
-        System.out.println("I squirts cool, clear water.");
+        System.out.println("It squirts cool, clear water.");
     }
+
+    public boolean take(NounInventory myInventory, NounInventory roomInventory) {
+        System.out.println("You can't pick that up 'Chief'.");
+        return true;
+    }
+
+    public String examineMsg(String defaultMsg)
+        { return "It squirts cool, clear water."; }
 
 
 }

@@ -1,8 +1,7 @@
 package Verb;
 
-import Nouns.Inventory;
+import Nouns.NounInventory;
 import Nouns.Noun;
-import Verb.Verb;
 
 public class Take extends Verb {
 
@@ -20,7 +19,7 @@ public class Take extends Verb {
     public inventorySpec whichInventory()
         { return inventorySpec.ROOM; }
 
-    public void runCommand(Noun noun, String prepNoun, Inventory myInventory, Inventory roomInventory) {
+    public void runCommand(Noun noun, String prepNoun, NounInventory myInventory, NounInventory roomInventory) {
 
         if (noun == null)
             System.out.println("I don't see that here.");

@@ -1,11 +1,11 @@
 package Nouns;
 
 
-public class AlloyDoor extends Noun {
+public class AllyDoor extends Noun {
 
     private boolean locked = true;
 
-    public AlloyDoor() {
+    public AllyDoor() {
 
         super(
                 // attributes
@@ -15,14 +15,14 @@ public class AlloyDoor extends Noun {
                 // modifier
                 "locked",
                 // shortDescription
-                "Looks locked, card scanner to the side.",
+                "Looks locked, card scanner to the side.  Open with ID card?",
                 // longDescription
-                "Looks like a secure locked door.  There is a Card Scanner beside the door."
+                "Looks like a securely locked door.  There is a Card Scanner beside the door.  Maybe door can be unlocked with an ID card."
         );
     }
 
 
-    public boolean open (String prepNoun, Inventory myInventory) {
+    public boolean open (String prepNoun, NounInventory myInventory) {
         if (! locked)
             System.out.println("Door is already unlocked.");
         else if (prepNoun.equals("id card") || prepNoun.equals("card")) {
@@ -45,5 +45,7 @@ public class AlloyDoor extends Noun {
         return false;
     }
 
+    public String examineMsg(String defaultMsg)
+        { return getDescription(); }
 
 }

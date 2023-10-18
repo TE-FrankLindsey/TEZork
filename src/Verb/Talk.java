@@ -1,6 +1,6 @@
 package Verb;
 
-import Nouns.Inventory;
+import Nouns.NounInventory;
 import Nouns.Noun;
 
 public class Talk extends Verb {
@@ -19,7 +19,7 @@ public class Talk extends Verb {
     public inventorySpec whichInventory()
         { return inventorySpec.ROOM; }
 
-    public void runCommand(Noun noun, String prepNoun, Inventory myInventory, Inventory roomInventory) {
+    public void runCommand(Noun noun, String prepNoun, NounInventory myInventory, NounInventory roomInventory) {
 
         if (noun == null)
             System.out.println("I don't see any such person here.");
@@ -30,7 +30,7 @@ public class Talk extends Verb {
         }
         else {
             if (! noun.talk(prepNoun, myInventory))
-                System.out.printf("Do you think the Bengals will make the playoffs?");
+                System.out.printf("Clerk \"Will the Bengals make the playoffs?\"");
         }
     }
 

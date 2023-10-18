@@ -1,30 +1,31 @@
-import Nouns.Inventory;
+package Verb;
+
+import Nouns.NounInventory;
 import Nouns.Noun;
+import Rooms.Room;
+import Rooms.RoomMap;
 import Verb.Verb;
 import ParseGroup.Parser;
 
 public class ProcessCommand {
 
-//    public List<Noun> allInventory;
-//    public List<Noun> myInventory = new ArrayList<>();
-    public Inventory myInventory = new Inventory();
-    public Inventory roomInventory = new Inventory();
-    public Inventory directionInventory = new Inventory();
-
-//    public List<Noun> roomInventory = new ArrayList<>();
-//    public List<Noun> directionInventory = new ArrayList<>();
+    public NounInventory myInventory = new NounInventory();
+//    public NounInventory roomInventory = new NounInventory();
+    public NounInventory directionInventory = new NounInventory();
     private Parser parser;
 
-//    private Inventory xInventory = new Inventory();
+    RoomMap roomMap = new RoomMap();
+
+    private Room currRoom = null;
 
     public ProcessCommand () {
 
-        roomInventory.loadNouns();
         directionInventory.loadDirections();
         parser = new Parser ();
 
-        String xx = roomInventory.getList();
-        String xxx = roomInventory.getList();
+        currRoom = roomMap.getRoom("AtAlly");
+        System.out.println(currRoom.getDescription());
+        System.out.println("You see around you: " + currRoom.getInventory().getList());
     }
 
     //
@@ -50,13 +51,14 @@ public class ProcessCommand {
 
         // Inventory
         if (currVerb.getName().equals("inventory")) {
-            currVerb.runCommand(null, "", myInventory, roomInventory);
+            currVerb.runCommand(null, "", myInventory, currRoom.getInventory());
             return;
         }
 
         // Look
         else if (currVerb.getName().equals("look")) {
-            currVerb.runCommand(null, "", myInventory, roomInventory);
+            System.out.println(currRoom.getDescription());
+            currVerb.runCommand(null, "", myInventory, currRoom.getInventory());
             return;
         }
 
@@ -67,9 +69,32 @@ public class ProcessCommand {
         if (currVerb.whichInventory() == Verb.inventorySpec.MY)
             parser.parseCommandNoun(myInventory);
         else if (currVerb.whichInventory() == Verb.inventorySpec.ROOM)
-            parser.parseCommandNoun(roomInventory);
+            parser.parseCommandNoun(currRoom.getInventory());
+
+else if (currVerb.whichInventory() == Verb.inventorySpec.DIRECTION) {
+            String direction = parser.parseDirection(currRoom.getDirections());
+
+String xx = currRoom.goDirection(direction);
+if (xx == null) {
+    System.out.println("You cannot go that direction.");
+    return;
+}
+
+else {
+Room tmpRoom = roomMap.getRoom(xx);
+currRoom = tmpRoom;
+System.out.printf(">>>>%s  --  %s\n", direction, xx);
+boolean stop = true;
+
+System.out.println(currRoom.getDescription());
+System.out.println("You see around you: " + currRoom.getInventory().getList());
+
+            return;
+        }
+        }
+
         else if (! parser.parseCommandNoun(myInventory))
-            parser.parseCommandNoun(roomInventory);
+            parser.parseCommandNoun(currRoom.getInventory());
 
         Noun currNoun = parser.getNoun();
 
@@ -78,7 +103,7 @@ public class ProcessCommand {
             prepNoun = parser.getPrepNoun();
         }
 
-        currVerb.runCommand(currNoun, prepNoun, myInventory, roomInventory);
+        currVerb.runCommand(currNoun, prepNoun, myInventory, currRoom.getInventory());
 
 
 /*

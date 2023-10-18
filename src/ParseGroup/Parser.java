@@ -1,11 +1,12 @@
 package ParseGroup;
 
 
-import Nouns.Inventory;
+import Nouns.NounInventory;
 import Nouns.Noun;
 import Verb.Verb;
 
 import java.util.List;
+import java.util.Map;
 
 public class Parser {
     protected String command;
@@ -31,7 +32,7 @@ public class Parser {
     public boolean isNounUnique()
         { return rtnStatus==NounStatus.SUCCESS; }
 
-    private Inventory inventory;
+    private NounInventory inventory;
 //    private List<Noun> allNouns;
     private List<Verb> allVerbs;
 
@@ -48,7 +49,7 @@ public class Parser {
     protected void advanceParserPtr(int length)
         { parserPtr += length; }
 
-    private String remainingText()
+    public String remainingText()
         { return command.substring(parserPtr); }
 
     // compare word of text against user entered text,
@@ -117,7 +118,7 @@ public class Parser {
         return currVerb!=null;
     }
 
-    public boolean parseCommandNoun (Inventory myInventory) {
+    public boolean parseCommandNoun (NounInventory myInventory) {
 
         inventory = myInventory;
         eatBlanks();
@@ -175,7 +176,7 @@ public class Parser {
         return NounStatus.FAILURE;
     }
 
-    public boolean parsePrepPhrase (Inventory inventory) {
+    public boolean parsePrepPhrase (NounInventory inventory) {
 
         prepNoun = null;
 
@@ -203,4 +204,26 @@ public class Parser {
         return false;
     }
 
+
+    public String parseDirection(Map<String, String> directions) {
+        eatBlanks();
+
+String x = remainingText();
+
+        String direction = "";
+        if (eatSubString("west")) {
+            direction = "west";
+        } else if (eatSubString("east")) {
+            direction = "east";
+        } else if (eatSubString("north")) {
+            direction = "north";
+        } else if (eatSubString("south")) {
+            direction = "south";
+        }
+
+
+        return direction;
+
+
+    }
 }

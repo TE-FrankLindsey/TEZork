@@ -1,6 +1,6 @@
 package Verb;
 
-import Nouns.Inventory;
+import Nouns.NounInventory;
 import Nouns.Noun;
 
 public class Look extends Verb {
@@ -16,7 +16,8 @@ public class Look extends Verb {
         );
     }
 
-    public void runCommand(Noun noun, String prepNoun, Inventory myInventory, Inventory roomInventory) {
+    public void runCommand(Noun noun, String prepNoun, NounInventory myInventory, NounInventory roomInventory) {
         System.out.println("You see around you: " + roomInventory.getList());
     }
+
 }

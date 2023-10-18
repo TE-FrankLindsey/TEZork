@@ -1,7 +1,7 @@
 package ParseGroup;
 
 import Verb.Verb;
-import Verb.Inventory;
+import Verb.VerbInventory;
 import Verb.Examine;
 import Verb.Open;
 import Verb.Take;
@@ -21,7 +21,7 @@ public class LoadVerbs {
     public static List<Verb>load () {
         List<Verb> verbList = new ArrayList<>();
 
-        verbList.add (new Inventory());
+        verbList.add (new VerbInventory());
         verbList.add (new Examine());
         verbList.add (new Open());
         verbList.add (new Take());

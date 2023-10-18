@@ -3,7 +3,7 @@ package Nouns;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Inventory {
+public class NounInventory {
 
     public List<Noun> inventory = new ArrayList<>();
 
@@ -12,6 +12,9 @@ public class Inventory {
 
     public Noun getItem (int idx)
         { return (idx>=inventory.size()) ? null : inventory.get(idx); }
+
+    public void clear ()
+        { inventory.clear(); }
 
     public void removeItem (Noun noun)
         { inventory.remove(noun); }
@@ -31,7 +34,7 @@ public class Inventory {
 inventory.add (new IDCard());
         inventory.add (new WaterFountain());
         inventory.add (new Condom());
-        inventory.add (new AlloyDoor());
+        inventory.add (new AllyDoor());
         inventory.add (new Clerk());
 //        inventory.add (new OrnateEgg());
     }

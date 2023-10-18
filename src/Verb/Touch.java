@@ -1,6 +1,6 @@
 package Verb;
 
-import Nouns.Inventory;
+import Nouns.NounInventory;
 import Nouns.Noun;
 
 public class Touch extends Verb {
@@ -19,7 +19,7 @@ public class Touch extends Verb {
     public inventorySpec whichInventory()
         { return inventorySpec.ANY; }
 
-    public void runCommand(Noun noun, String prepNoun, Inventory myInventory, Inventory roomInventory) {
+    public void runCommand(Noun noun, String prepNoun, NounInventory myInventory, NounInventory roomInventory) {
 
         String msg = "I'm ...not ...touching ...that!";
         if (noun == null)

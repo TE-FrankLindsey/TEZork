@@ -109,19 +109,19 @@ public abstract class Noun extends SyntaxElement {
     //
     // override actions best handled by the nouns involved instead of the verbs
 
-    public boolean take(Inventory myInventory, Inventory roomInventory)
+    public boolean take(NounInventory myInventory, NounInventory roomInventory)
         { return false; }
 
-    public void examine(Inventory myInventory, Inventory roomInventory)
+    public void examine(NounInventory myInventory, NounInventory roomInventory)
         { }
 
-    public boolean talk(String prepNoun, Inventory inventory)
+    public boolean talk(String prepNoun, NounInventory inventory)
         { return false; }
 
-    public boolean open(String prepNoun, Inventory myInventory)
+    public boolean open(String prepNoun, NounInventory myInventory)
         { return false; }
 
-    public boolean fill(String prepNoun, Inventory myInventory)
+    public boolean fill(String prepNoun, NounInventory myInventory)
         { return false; }
 
     // room support - move out to "Room" class soon as possible

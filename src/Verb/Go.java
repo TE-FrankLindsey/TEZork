@@ -1,6 +1,6 @@
 package Verb;
 
-import Nouns.Inventory;
+import Nouns.NounInventory;
 import Nouns.Noun;
 
 public class Go extends Verb {
@@ -16,7 +16,10 @@ public class Go extends Verb {
         );
     }
 
-    public void runCommand(Noun noun, String prepNoun, Inventory myInventory, Inventory roomInventory) {
+    public inventorySpec whichInventory()
+        { return inventorySpec.DIRECTION; }
+
+    public void runCommand(Noun noun, String prepNoun, NounInventory myInventory, NounInventory roomInventory) {
 
         if (noun == null)
             System.out.println("I don't see that here.");
