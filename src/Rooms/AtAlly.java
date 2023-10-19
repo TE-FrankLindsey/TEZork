@@ -13,7 +13,7 @@ public class AtAlly extends Room {
                 // shortDescription
                 "You're standing in front of the Ally building.  Buildings are to the North and a door is to the west.",
                 // longDescription
-                "\n\nYou're standing in front of a building at the end of a street.  " +
+                "You're standing in front of a building at the end of a street.  " +
                 "On the building is a sign which reads:\n" +
                 "   \"Grow Here.\"\n" +
                 "   \"Thrive Here.\"\n" +

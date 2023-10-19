@@ -1,2 +1,4 @@
-﻿out/production/
+﻿*.gitignore
+out/production/
 *.classout/production/
+out/

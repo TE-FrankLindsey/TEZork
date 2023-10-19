@@ -1,4 +1,4 @@
-package Verb;
+package ParseGroup;
 
 import Nouns.NounInventory;
 import Nouns.Noun;
@@ -10,7 +10,6 @@ import ParseGroup.Parser;
 public class ProcessCommand {
 
     public NounInventory myInventory = new NounInventory();
-//    public NounInventory roomInventory = new NounInventory();
     public NounInventory directionInventory = new NounInventory();
     private Parser parser;
 
@@ -19,7 +18,6 @@ public class ProcessCommand {
     private Room currRoom = null;
 
     public ProcessCommand () {
-
         parser = new Parser ();
 
         currRoom = roomMap.getRoom("AtAlly");
@@ -31,7 +29,6 @@ public class ProcessCommand {
     // Parse out the VERB and NOUN from the command and act on those
     //
     public void runCommand (String Command) {
-
         // clean up the input some
         parser.preParseText(Command);
 
@@ -105,15 +102,6 @@ public class ProcessCommand {
 
         // run command with the noun and prepositional noun
         currVerb.runCommand(currNoun, prepNoun, myInventory, currRoom.getInventory());
-
-
-/*
-        if (! parser.parseCommandNoun(directionInventory)) {
-            System.out.println("go direction...");
-        }
-        else
-            System.out.printf("go direction %s\n", parser.getNoun().getName());
-*/
     }
 
 }

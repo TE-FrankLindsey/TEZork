@@ -6,16 +6,18 @@ public class Rubble extends Noun {
     public Rubble() {
 
         super(
-                // attributes
-                0,
-                // name
-                "rubble",
-                // modifier
-                "dirty",
-                // shortDescription
-                "shortDescription: It's a nasty pile of rubble",
-                // longDescription
-                "longDescription It's a nasty pile of rubble"
+            // attributes
+            0,
+            // name
+            "rubble",
+            // synonyms
+            new String[]{"rubble", "trash", "pile", "debris"},
+            // modifier
+            "dirty",
+            // shortDescription
+            "shortDescription: It's a nasty pile of rubble",
+            // longDescription
+            "longDescription It's a nasty pile of rubble"
         );
     }
 
@@ -27,7 +29,7 @@ public class Rubble extends Noun {
     public void examine (NounInventory myInventory, NounInventory roomInventory) {
         String msg = "Looks like a dirty collection of scraps and debris.\n";
         if (ornateEgg == null) {
-            msg += "There is a glint of something in the rubble, looks like an ornate egg!\n" +
+            msg += "There is a glint of something in the rubble, looks like an ornate egg! " +
                     "...gold plated and jewel encrusted!\nThe egg dislodges from the rubble.";
 
             ornateEgg = new OrnateEgg();

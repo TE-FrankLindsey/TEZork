@@ -12,6 +12,8 @@ public class RedApple extends Noun {
                 EAT | TAKE,
                 // name
                 "apple",
+                // synonyms
+                new String[]{"apple"},
                 // modifier
                 "red",
                 // shortDescription

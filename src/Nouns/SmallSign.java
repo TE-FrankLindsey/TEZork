@@ -10,13 +10,16 @@ public class SmallSign extends Noun {
                 0,
                 // name
                 "sign",
+                // synonyms
+                new String[]{"sign"},
                 // modifier
                 "small",
                 // shortDescription
-                "shortDescription: It's an ID card",
+                "\"Prophylactics For Sale Ask Clerk\"",
                 // longDescription
                 "A small, discretely hand-lettered sign says:\n"
-                +"\"Prophylactics For Sale Ask Clerk\""
+                +"\"Prophylactics For Sale Ask Clerk\"\n\n"
+                +"Hmmm ... a condom could hold water."
         );
     }
 

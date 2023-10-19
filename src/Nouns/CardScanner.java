@@ -10,6 +10,8 @@ public class CardScanner extends Noun {
                 TOUCH,
                 // name
                 "scanner",
+                // synonyms
+                new String[]{"scanner", "reader"},
                 // modifier
                 "card",
                 // shortDescription
