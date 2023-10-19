@@ -26,7 +26,7 @@ public class Go extends Verb {
         else if (noun.isAmbiguous())
             System.out.printf("Which %s did you want to take?\n", noun.getName());
         else if (noun.canTake()) {
-            System.out.printf("You now have the %s.\n", noun.getDisplayName());
+            System.out.printf("?? You now have the %s.\n", noun.getDisplayName());
             myInventory.addItem(noun);
             roomInventory.removeItem(noun);
         } else

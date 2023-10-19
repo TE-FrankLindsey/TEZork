@@ -20,7 +20,6 @@ public class ProcessCommand {
 
     public ProcessCommand () {
 
-        directionInventory.loadDirections();
         parser = new Parser ();
 
         currRoom = roomMap.getRoom("AtAlly");
@@ -40,7 +39,7 @@ public class ProcessCommand {
     // try to find verb in user submitted command
     //
         if (!parser.parseCommandVerb() || parser.getVerb()==null) {
-            System.out.println("I don't understand that command.\n");
+            System.out.println("I have no idea what you are asking of me.\n");
             return;
         }
         Verb currVerb = parser.getVerb();
@@ -71,38 +70,40 @@ public class ProcessCommand {
         else if (currVerb.whichInventory() == Verb.inventorySpec.ROOM)
             parser.parseCommandNoun(currRoom.getInventory());
 
-else if (currVerb.whichInventory() == Verb.inventorySpec.DIRECTION) {
-            String direction = parser.parseDirection(currRoom.getDirections());
+    //
+    // handle movement north, south, west, east
+    //
+        else if (currVerb.whichInventory() == Verb.inventorySpec.DIRECTION) {
+            // resolve direction to room title
+            String requestedDirection = parser.parseDirection(currRoom.getDirections());
+            String movementDirection = currRoom.goDirection(requestedDirection);
 
-String xx = currRoom.goDirection(direction);
-if (xx == null) {
-    System.out.println("You cannot go that direction.");
-    return;
-}
-
-else {
-Room tmpRoom = roomMap.getRoom(xx);
-currRoom = tmpRoom;
-System.out.printf(">>>>%s  --  %s\n", direction, xx);
-boolean stop = true;
-
-System.out.println(currRoom.getDescription());
-System.out.println("You see around you: " + currRoom.getInventory().getList());
-
-            return;
+            if (movementDirection == null) {
+                System.out.println("You cannot go that direction.");
+                return;
+            }
+            else {
+                // resolve room title to room, make current room and display room information
+                currRoom = roomMap.getRoom(movementDirection);
+                System.out.println(currRoom.getDescription());
+                System.out.println("You see around you: " + currRoom.getInventory().getList());
+                return;
+            }
         }
-        }
 
+        // for inventory of ANY specified, try applying verb to MyInventory then RoomInventory
         else if (! parser.parseCommandNoun(myInventory))
             parser.parseCommandNoun(currRoom.getInventory());
-
         Noun currNoun = parser.getNoun();
 
+    //
+    // parse for the prepositional phrase
+    //
         String prepNoun = "";
-        if (parser.parsePrepPhrase (myInventory)) {
+        if (parser.parsePrepPhrase (myInventory))
             prepNoun = parser.getPrepNoun();
-        }
 
+        // run command with the noun and prepositional noun
         currVerb.runCommand(currNoun, prepNoun, myInventory, currRoom.getInventory());
 
 

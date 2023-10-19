@@ -15,6 +15,9 @@ public abstract class Noun extends SyntaxElement {
     protected final static int TOUCH = 16;
     protected final static int FILL = 32;
     protected final static int POUR = 64;
+    protected final static int SCAN = 128;
+    protected final static int HIDE = 256;
+
     protected int attributes;
 
     public String getModifier()
@@ -87,51 +90,41 @@ public abstract class Noun extends SyntaxElement {
     public boolean canEat ()
         { return (attributes&EAT) == EAT; }
     public boolean canTake ()
-        { return (attributes&TAKE) == TAKE; }
+        {
+            return (attributes&TAKE) == TAKE; }
     public boolean canTalk ()
         { return (attributes&TALK) == TALK; }
     public boolean canOpen ()
         { return (attributes&OPEN) == OPEN; }
+    public boolean canScan ()
+        { return (attributes&SCAN) == SCAN; }
+    public boolean canHide ()
+        { return (attributes&HIDE) == HIDE; }
 
 
-    //
-    // override messages best handled by the nouns involved instead of the verbs
+//
+// override actions best handled by the nouns involved instead of the verbs
 
-    public String examineMsg(String defaultMsg)
-        { return defaultMsg; }
+    public void take(NounInventory myInventory, NounInventory roomInventory) {
+        System.out.printf("You now have the %s.\n", getDisplayName());
 
-    public String takeMsg(String defaultMsg)
-        { return defaultMsg; }
+        myInventory.addItem(this);
+        roomInventory.removeItem(this);
+    };
 
-    public String touchMsg(String defaultMsg)
-        { return defaultMsg; }
-
-    //
-    // override actions best handled by the nouns involved instead of the verbs
-
-    public boolean take(NounInventory myInventory, NounInventory roomInventory)
-        { return false; }
+    public void touch()
+        { System.out.printf("You touched the %s.  Did that give you a thrill?", getDisplayName()); }
 
     public void examine(NounInventory myInventory, NounInventory roomInventory)
-        { }
+        { System.out.println(getDescription()); }
 
-    public boolean talk(String prepNoun, NounInventory inventory)
-        { return false; }
+    public void talk(String prepNoun, NounInventory inventory)
+        { System.out.printf("\"Will the Bengals make the playoffs?\""); }
 
     public boolean open(String prepNoun, NounInventory myInventory)
         { return false; }
 
     public boolean fill(String prepNoun, NounInventory myInventory)
         { return false; }
-
-    // room support - move out to "Room" class soon as possible
-
-    protected final static int ENTER = 16;
-    protected final static int GO = 32;
-
-    public boolean canGo ()
-        { return (attributes&GO) == GO; }
-
-    
 
 }

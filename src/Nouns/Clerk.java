@@ -21,21 +21,17 @@ public class Clerk extends Noun {
         );
     }
 
-    public String examineMsg(String defaultMsg)
-        { return getDescription(); }
-
-    public String talkMsg(String defaultMsg)
-        { return getDescription(); }
-
-    public boolean talk(String prepNoun, NounInventory inventory) {
+    public void talk(String prepNoun, NounInventory inventory) {
         if (prepNoun.equals("condom")) {
-            System.out.println("Clerk: \"Yes we sell those:\"");
+            System.out.println("After looking around to make certain you're alone, \n"
+                    +"you quietly ask the clerk if he has any available behind the counter.\n"
+            );
+
+            System.out.println("Clerk: \"Sure thing buddy:\"");
             purchaseCondom (inventory);
-
-            return true;
         }
-
-        return false;
+        else
+            System.out.printf("\"Will the Bengals make the playoffs?\"\nClerk: \"* meh *\"\n");
     }
 
     private void purchaseCondom (NounInventory inventory) {
@@ -73,7 +69,7 @@ public class Clerk extends Noun {
 
         String modifier = String.format("%s-%s-%s-%s-%s", spec1, spec2, spec3, spec4, spec5);
 
-        String msg = "\nClerk: \"Hey, everybody! This customer just bought a \n" +
+        String msg = "\nClerk: \"Hey, everybody! This weird-o just bought a \n" +
                 modifier + " rubber!!!\"\nEveryone in store looks at you...\n\"What a PERVERT!!!\"";
         System.out.println(msg);
 

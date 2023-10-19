@@ -12,7 +12,7 @@ public class Examine extends Verb {
             "examine",
 
             // synonyms
-            new String[]{"examine", "look at"}
+            new String[]{"examine", "read", "look at"}
         );
     }
 
@@ -26,16 +26,10 @@ public class Examine extends Verb {
         } else if (noun.isAmbiguous()) {
             System.out.printf("Which %s did you want to examine?\n", noun.getName());
             return;
-//        } else if (! noun.canExamine()) {
-//            System.out.println("...not ...going ...to ...try ...that");
-//            return;
         }
 
         // individualize result for each noun
-        String defaultMsg = String.format("I see nothing unusual about this %s.", noun.getDisplayName());
-        System.out.println(noun.examineMsg(defaultMsg));
         noun.examine(myInventory, roomInventory);
-
     }
 
 }

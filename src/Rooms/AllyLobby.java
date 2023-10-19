@@ -1,6 +1,7 @@
 package Rooms;
 
 
+import Nouns.Water;
 import Nouns.WaterFountain;
 
 public class AllyLobby extends Room {
@@ -21,6 +22,7 @@ public class AllyLobby extends Room {
         addExit ("east", "AtAlly");
 
         addItem (new WaterFountain());
+        addItem (new Water());
     }
 
 }

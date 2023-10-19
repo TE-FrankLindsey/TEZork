@@ -45,7 +45,7 @@ public class AllyDoor extends Noun {
         return false;
     }
 
-    public String examineMsg(String defaultMsg)
-        { return getDescription(); }
+    public void examine(NounInventory myInventory, NounInventory roomInventory)
+        { System.out.println(getDescription()); }
 
 }

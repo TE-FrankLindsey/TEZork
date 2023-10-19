@@ -7,22 +7,24 @@ public class Water extends Noun {
 
         super(
                 // attributes
-                0,
+                HIDE | TAKE,
                 // name
                 "water",
                 // modifier
                 "",
                 // shortDescription
-                "shortDescription: It's water",
+                "Cool, clear water.",
                 // longDescription
-                "longDescription It's water"
+                "Cool, clear water.  Good for drinking, cleaning and extinguishing trashcan fires."
         );
     }
 
-        public void examine() {
-            System.out.println("Cool, clear water.");
-        }
 
+    public void examine(NounInventory myInventory, NounInventory roomInventory)
+        { System.out.println(getDescription()); }
+
+    public void take(NounInventory myInventory, NounInventory roomInventory)
+        { System.out.println("You take a handfull but it runs out between your fingers.  (Maybe if you had something to put it in?)"); }
 
 
 }

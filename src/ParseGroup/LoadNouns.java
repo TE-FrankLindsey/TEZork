@@ -23,15 +23,6 @@ public class LoadNouns {
         return nounList;
     }
 
-    public static List<Noun>loadDirections () {
-        List<Noun> DirectionList = new ArrayList<>();
 
-        DirectionList.add (new West());
-        DirectionList.add (new East());
-        DirectionList.add (new North());
-        DirectionList.add (new South());
-
-        return DirectionList;
-    }
 
 }

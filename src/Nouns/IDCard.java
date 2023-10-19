@@ -9,7 +9,7 @@ public class IDCard extends Noun {
 
         super(
                 // attributes
-                TAKE,
+                TAKE | SCAN,
                 // name
                 "card",
                 // modifier

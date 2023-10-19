@@ -21,25 +21,22 @@ public class Rubble extends Noun {
 
     private OrnateEgg ornateEgg = null;
 
-    public String examineMsg(String defaultMsg) {
-        String msg = "Looks like a dirty collection of scraps and debris.\n";
-        if (ornateEgg == null)
-            msg += "There is a glint of something in the rubble, looks like an ornate egg!\n" +
-                "...gold plated and jewel encrusted!\nThe egg dislodges from the rubble.";
-        else
-            msg += "Which once held an ornate egg.";
-
-        return msg;
-    }
-
-    public String touchMsg(String defaultMsg)
-        { return "Nope, not touching that.  Too nasty!"; }
+    public void touch()
+        { System.out.println("Nope, not touching that.  Too nasty!"); }
 
     public void examine (NounInventory myInventory, NounInventory roomInventory) {
+        String msg = "Looks like a dirty collection of scraps and debris.\n";
         if (ornateEgg == null) {
+            msg += "There is a glint of something in the rubble, looks like an ornate egg!\n" +
+                    "...gold plated and jewel encrusted!\nThe egg dislodges from the rubble.";
+
             ornateEgg = new OrnateEgg();
             roomInventory.addItem(ornateEgg);
         }
+        else
+            msg += "Which once held an ornate egg.";
+
+        System.out.println(msg);
     }
 
 }

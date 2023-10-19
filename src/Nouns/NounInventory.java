@@ -39,25 +39,27 @@ inventory.add (new IDCard());
 //        inventory.add (new OrnateEgg());
     }
 
-    public void loadDirections () {
-        inventory.clear();
-
-        inventory.add (new West());
-        inventory.add (new East());
-        inventory.add (new North());
-        inventory.add (new South());
-    }
 
     public String getList () {
 
+        // make list of all items which do not have the HIDE attribute
+        List<Noun> tmpInventory = new ArrayList<>();
+        for (Noun someNoun : inventory)
+            if (! someNoun.canHide())
+                tmpInventory.add(someNoun);
+
+
         String list = "";
-        if (inventory==null || inventory.size()==0)
+        if (tmpInventory==null || tmpInventory.size()==0)
             list = "nothing";
         else {
-            list = inventory.get(0).getDisplayName();
-            for (int i = 1; i != inventory.size(); i++) {
-                list += (i==inventory.size()-1) ? " and " : ", ";
-                list += inventory.get(i).getDisplayName();
+
+
+            // make list of all items without the HIDE attribute
+            list = tmpInventory.get(0).getDisplayName();
+            for (int i = 1; i != tmpInventory.size(); i++) {
+                list += (i==tmpInventory.size()-1) ? " and " : ", ";
+                list += tmpInventory.get(i).getDisplayName();
             }
         }
 

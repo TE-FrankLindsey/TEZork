@@ -7,7 +7,7 @@ public class CardScanner extends Noun {
 
         super(
                 // attributes
-                TAKE,
+                TOUCH,
                 // name
                 "scanner",
                 // modifier
@@ -15,16 +15,11 @@ public class CardScanner extends Noun {
                 // shortDescription
                 "Standard card scanner. I think you could open the door if you had an ID Card.",
                 // longDescription
-                "Standard card scanner. I think you could open the door if you had an ID Card."
+                "Card scanner. Could open the door if you had an ID Card?"
         );
     }
 
-//        public void examine() {
-//            System.out.println("Looks like this could be used to open a door!");
-//        }
-
-    public String examineMsg(String defaultMsg)
-        { return getDescription(); }
-
+    public void examine(NounInventory myInventory, NounInventory roomInventory)
+        { System.out.println(getDescription()); }
 
 }
