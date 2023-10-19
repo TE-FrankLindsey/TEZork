@@ -12,12 +12,14 @@ public class Condom extends Noun {
                 POUR | FILL | TAKE,
                 // name
                 "condom",
+                // synonyms
+                new String[]{"condom", "rubber", "prophylactic"},
                 // modifier
                 "",
                 // shortDescription
-                "shortDescription: It's a condom",
+                "Can hold some water.",
                 // longDescription
-                "longDescription It's a condom"
+                "Looks like it can hold some water."
         );
     }
 
@@ -28,6 +30,8 @@ public class Condom extends Noun {
                 POUR | FILL | TAKE,
                 // name
                 "condom",
+                // synonyms
+                new String[]{"condom", "rubber", "prophylactic"},
                 // modifier
                 modifier,
                 // shortDescription

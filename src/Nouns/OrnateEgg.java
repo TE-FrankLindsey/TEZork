@@ -10,6 +10,8 @@ public class OrnateEgg extends Noun {
                 TAKE,
                 // name
                 "egg",
+                // synonyms
+                new String[]{"egg"},
                 // modifier
                 "ornate",
                 // shortDescription

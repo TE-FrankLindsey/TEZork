@@ -10,6 +10,8 @@ public class Pill extends Noun {
                 EAT | TAKE,
                 // name
                 "pill",
+                // synonyms
+                new String[]{"pill"},
                 // modifier
                 "",
                 // shortDescription

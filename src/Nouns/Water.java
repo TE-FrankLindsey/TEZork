@@ -10,6 +10,8 @@ public class Water extends Noun {
                 HIDE | TAKE,
                 // name
                 "water",
+                // synonyms
+                new String[]{"water"},
                 // modifier
                 "",
                 // shortDescription

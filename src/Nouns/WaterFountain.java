@@ -10,6 +10,8 @@ public class WaterFountain extends Noun {
                 TAKE,
                 // name
                 "fountain",
+                // synonyms
+                new String[]{"fountain", "dispenser"},
                 // modifier
                 "water",
                 // shortDescription

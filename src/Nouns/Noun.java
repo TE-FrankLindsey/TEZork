@@ -6,6 +6,8 @@ public abstract class Noun extends SyntaxElement {
 
     protected String modifier;
     protected final String name;
+    protected String[] synonyms;
+
     protected boolean ambiguous;
 
     protected final static int EAT = 1;
@@ -44,17 +46,19 @@ public abstract class Noun extends SyntaxElement {
         this.modifier = null;
     }
 
-    public Noun (int attributes, String name, String modifier, String shortDesc, String longDesc) {
+    public Noun (int attributes, String name, String[] synonyms, String modifier, String shortDesc, String longDesc) {
         super(shortDesc, longDesc);
         this.attributes = attributes;
         this.name = name;
+        this.synonyms = synonyms;
         this.modifier = modifier;
     }
 
-    public Noun (int attributes, String name, String shortDesc, String longDesc) {
+    public Noun (int attributes, String name, String[] synonyms, String shortDesc, String longDesc) {
         super(shortDesc, longDesc);
         this.attributes = attributes;
         this.name = name;
+        this.synonyms = synonyms;
         this.modifier = null;
     }
 

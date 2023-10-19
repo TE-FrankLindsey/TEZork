@@ -184,6 +184,7 @@ public class Parser {
 
         if (eatSubString("with ")) {
         } else if (eatSubString("using ")) {
+        } else if (eatSubString("to ")) {
         } else if (eatSubString("into ")) {
         } else if (eatSubString("from ")) {
         } else if (eatSubString("about ")) {

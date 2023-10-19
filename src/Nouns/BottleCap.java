@@ -10,6 +10,8 @@ public class BottleCap extends Noun {
                 TAKE,
                 // name
                 "cap",
+                // synonyms
+                new String[]{"cap"},
                 // modifier
                 "bottle",
                 // shortDescription

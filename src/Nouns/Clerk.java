@@ -12,6 +12,8 @@ public class Clerk extends Noun {
                 TALK,
                 // name
                 "clerk",
+                // synonyms
+                new String[]{"clerk", "person", "guy", "employee"},
                 // modifier
                 "friendly",
                 // shortDescription

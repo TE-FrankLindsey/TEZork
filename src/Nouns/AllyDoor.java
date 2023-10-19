@@ -12,6 +12,8 @@ public class AllyDoor extends Noun {
                 TOUCH | OPEN,
                 // name
                 "door",
+                // synonyms
+                new String[]{"door", "entrance"},
                 // modifier
                 "locked",
                 // shortDescription

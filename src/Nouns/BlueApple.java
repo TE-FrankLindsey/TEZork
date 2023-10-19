@@ -10,6 +10,8 @@ public class BlueApple extends Noun {
                 EAT | TAKE,
                 // name
                 "apple",
+                // synonyms
+                new String[]{"apple"},
                 // modifier
                 "blue",
                 // shortDescription

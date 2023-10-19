@@ -12,6 +12,8 @@ public class IDCard extends Noun {
                 TAKE | SCAN,
                 // name
                 "card",
+                // synonyms
+                new String[]{"card", "key"},
                 // modifier
                 "id",
                 // shortDescription

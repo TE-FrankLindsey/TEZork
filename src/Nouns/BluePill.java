@@ -10,6 +10,8 @@ public class BluePill extends Noun {
                 EAT | TAKE,
                 // name
                 "pill",
+                // synonyms
+                new String[]{"pill"},
                 // modifier
                 "blue",
                 // shortDescription

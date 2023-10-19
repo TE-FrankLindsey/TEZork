@@ -10,6 +10,8 @@ public class Rubble extends Noun {
                 0,
                 // name
                 "rubble",
+                // synonyms
+                new String[]{"rubble", "trash", "pile", "debris"},
                 // modifier
                 "dirty",
                 // shortDescription
