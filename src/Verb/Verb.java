@@ -6,9 +6,6 @@ import SyntaxElement.SyntaxElement;
 
 public abstract class Verb extends SyntaxElement {
 
-    protected final String name;
-    protected String[] synonyms;
-
     public enum inventorySpec {MY, ROOM, ANY, DIRECTION};
 
     public inventorySpec whichInventory()
@@ -17,20 +14,10 @@ public abstract class Verb extends SyntaxElement {
     public String getName()
         { return name; }
 
-    public int getSynonymCount () {
-        return synonyms.length;
-    }
-
-    public String getSynonym (int x) {
-        return synonyms[x];
-    }
-
     public Verb(String name, String[] synonyms) {
-        this.name = name;
-        this.synonyms = synonyms;
+        super (name, synonyms);
     }
 
-//    public abstract String getCannotMessage ();
     public abstract void runCommand(Noun noun, String prepNoun, NounInventory myInventory, NounInventory roomInventory);
 
 

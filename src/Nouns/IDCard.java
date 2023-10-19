@@ -8,18 +8,18 @@ public class IDCard extends Noun {
     public IDCard() {
 
         super(
-                // attributes
-                TAKE | SCAN,
-                // name
-                "card",
-                // synonyms
-                new String[]{"card", "key"},
-                // modifier
-                "id",
-                // shortDescription
-                "shortDescription: It's an ID card",
-                // longDescription
-                "longDescription It's an ID card"
+            // attributes
+            TAKE | SCAN,
+            // name
+            "Card",
+            // synonyms
+            new String[]{"card", "key"},
+            // modifier
+            "ID",
+            // shortDescription
+            "shortDescription: It's an ID card",
+            // longDescription
+            "longDescription It's an ID card"
         );
     }
 

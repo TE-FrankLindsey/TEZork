@@ -11,7 +11,7 @@ public class AtQuikiMart extends Room {
             // shortDescription
             "To the east is a local QuikiMart",
             // longDescription
-            "\n\nEast of you is one of countless QuikiMarts in this city.\n" +
+            "East of you is one of countless QuikiMarts in this city.\n" +
             "Open 24 hours a day, 7 days a week to meet your purchasing needs."
         );
 

@@ -9,8 +9,6 @@ import java.util.Map;
 
 public class Room extends SyntaxElement{
 
-    final public String name;
-
     private Map<String, String> directions = new HashMap<>();
 
     public Map<String, String> getDirections()
@@ -38,8 +36,7 @@ public class Room extends SyntaxElement{
     }
 
     protected Room (String name, String shortDesc, String longDesc) {
-        super(shortDesc, longDesc);
-        this.name = name;
+        super(name, shortDesc, longDesc);
     }
 
     public String goDirection(String direction) {

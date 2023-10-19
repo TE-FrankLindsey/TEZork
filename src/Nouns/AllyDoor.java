@@ -8,18 +8,18 @@ public class AllyDoor extends Noun {
     public AllyDoor() {
 
         super(
-                // attributes
-                TOUCH | OPEN,
-                // name
-                "door",
-                // synonyms
-                new String[]{"door", "entrance"},
-                // modifier
-                "locked",
-                // shortDescription
-                "Looks locked, card scanner to the side.  Open with ID card?",
-                // longDescription
-                "Looks like a securely locked door.  There is a Card Scanner beside the door.  Maybe door can be unlocked with an ID card."
+            // attributes
+            TOUCH | OPEN,
+            // name
+            "door",
+            // synonyms
+            new String[]{"door", "entrance"},
+            // modifier
+            "locked",
+            // shortDescription
+            "Looks locked, card scanner to the side.  Open with ID card?",
+            // longDescription
+            "Looks like a securely locked door.  There is a Card Scanner beside the door.  Maybe door can be unlocked with an ID card."
         );
     }
 

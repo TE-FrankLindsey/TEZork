@@ -5,8 +5,6 @@ import SyntaxElement.SyntaxElement;
 public abstract class Noun extends SyntaxElement {
 
     protected String modifier;
-    protected final String name;
-    protected String[] synonyms;
 
     protected boolean ambiguous;
 
@@ -25,9 +23,6 @@ public abstract class Noun extends SyntaxElement {
     public String getModifier()
         { return modifier; }
 
-    public String getName()
-        { return name; }
-
     public boolean isAmbiguous() {
         return ambiguous;
     }
@@ -40,25 +35,20 @@ public abstract class Noun extends SyntaxElement {
         { return (modifier!=null && !modifier.equals("")) ? String.format("%s %s", modifier, name) : name; }
 
     public Noun () {
-        super("", "");
+        super(null, null,null,null);
         attributes = 0;
-        this.name = "";
         this.modifier = null;
     }
 
     public Noun (int attributes, String name, String[] synonyms, String modifier, String shortDesc, String longDesc) {
-        super(shortDesc, longDesc);
+        super(name, synonyms, shortDesc, longDesc);
         this.attributes = attributes;
-        this.name = name;
-        this.synonyms = synonyms;
         this.modifier = modifier;
     }
 
     public Noun (int attributes, String name, String[] synonyms, String shortDesc, String longDesc) {
-        super(shortDesc, longDesc);
+        super(name, synonyms, shortDesc, longDesc);
         this.attributes = attributes;
-        this.name = name;
-        this.synonyms = synonyms;
         this.modifier = null;
     }
 
@@ -120,7 +110,8 @@ public abstract class Noun extends SyntaxElement {
         { System.out.printf("You touched the %s.  Did that give you a thrill?", getDisplayName()); }
 
     public void examine(NounInventory myInventory, NounInventory roomInventory)
-        { System.out.println(getDescription()); }
+        {
+            System.out.println(getDescription()); }
 
     public void talk(String prepNoun, NounInventory inventory)
         { System.out.printf("\"Will the Bengals make the playoffs?\""); }

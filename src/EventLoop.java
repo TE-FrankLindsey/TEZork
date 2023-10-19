@@ -1,6 +1,6 @@
 
 import ParseGroup.Parser;
-import Verb.ProcessCommand;
+import ParseGroup.ProcessCommand;
 
 import java.util.Scanner;
 
@@ -19,14 +19,12 @@ public class EventLoop {
 
         for (boolean keepGoing=true; keepGoing; ) {
 
-            System.out.print(">>");
+            System.out.print("\n>>");
             String textIn = userInput.nextLine();
             if (textIn.equals("q")) {
                 return;
             }
             processCommand.runCommand(textIn);
-            System.out.println("");
-
         }
     }
 

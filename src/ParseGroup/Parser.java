@@ -33,7 +33,7 @@ public class Parser {
         { return rtnStatus==NounStatus.SUCCESS; }
 
     private NounInventory inventory;
-//    private List<Noun> allNouns;
+    
     private List<Verb> allVerbs;
 
     public Parser () {
@@ -154,14 +154,21 @@ public class Parser {
         // if modifier and name match then return true
         if (eatSubString(someNoun.getModifier())) {
             eatBlanks();
-            if (eatSubString(someNoun.getName())) {
+
+            // test for match with noun Synonym
+
+//            for (int i=0; i!=someNoun.getSynonymCount(); i++) {
+//
+//                if (eatSubString(someNoun.getSynonym(i))) {
+            if (matchNounSynonym(someNoun)) {
                 currNoun = someNoun;
                 return NounStatus.SUCCESS;
             }
         }
 
         // if modifier failed to match then test for unmodified noun
-        else if (eatSubString(someNoun.getName())) {
+//        else if (eatSubString(someNoun.getName())) {
+        else if (matchNounSynonym(someNoun)) {
 
             currNoun = someNoun;
 
@@ -176,6 +183,13 @@ public class Parser {
         return NounStatus.FAILURE;
     }
 
+    private boolean matchNounSynonym (Noun someNoun) {
+        for (int i=0; i!=someNoun.getSynonymCount(); i++)
+            if (eatSubString(someNoun.getSynonym(i)))
+                return true;
+
+        return false;
+    }
     public boolean parsePrepPhrase (NounInventory inventory) {
 
         prepNoun = null;
@@ -209,8 +223,6 @@ public class Parser {
     public String parseDirection(Map<String, String> directions) {
         eatBlanks();
 
-String x = remainingText();
-
         String direction = "";
         if (eatSubString("west")) {
             direction = "west";
@@ -222,9 +234,6 @@ String x = remainingText();
             direction = "south";
         }
 
-
         return direction;
-
-
     }
 }

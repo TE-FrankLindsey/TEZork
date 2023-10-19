@@ -6,19 +6,19 @@ public class OrnateEgg extends Noun {
     public OrnateEgg() {
 
         super(
-                // attributes
-                TAKE,
-                // name
-                "egg",
-                // synonyms
-                new String[]{"egg"},
-                // modifier
-                "ornate",
-                // shortDescription
-                "looks like an ornate egg! Gold plated and jewel encrusted!",
-                // longDescription
-                "There is a glint of something in the rubble, looks like an ornate egg!\n"
-                + "...gold plated and jewel encrusted!"
+            // attributes
+            TAKE,
+            // name
+            "egg",
+            // synonyms
+            new String[]{"egg"},
+            // modifier
+            "ornate",
+            // shortDescription
+            "looks like an ornate egg! Gold plated and jewel encrusted!",
+            // longDescription
+            "There is a glint of something in the rubble, looks like an ornate egg! "
+            + "...gold plated and jewel encrusted!"
         );
     }
 
