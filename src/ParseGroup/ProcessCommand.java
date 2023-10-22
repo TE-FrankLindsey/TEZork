@@ -9,7 +9,7 @@ import Verb.Verb;
 
 public class ProcessCommand {
 
-    public NounInventory myInventory = new NounInventory();
+//    public NounInventory myInventory = new NounInventory();
     private Parser parser;
 
     RoomMap roomMap = new RoomMap();
@@ -24,8 +24,8 @@ public class ProcessCommand {
         System.out.println("You see around you: " + DAO.getRoomInventory().getList());
 
 // !!! FIXME - remove
-myInventory.addItem(new Condom());
-myInventory.addItem(new IDCard());
+DAO.myInventoryAdd(new Condom());
+DAO.myInventoryAdd(new IDCard());
     }
 
     //
@@ -50,14 +50,14 @@ myInventory.addItem(new IDCard());
 
         // Inventory
         if (currVerb.getName().equals("inventory")) {
-            currVerb.runCommand(null, null, myInventory, DAO.getRoomInventory());
+            currVerb.runCommand(null, null, DAO.getMyInventory(), DAO.getRoomInventory());
             return;
         }
 
         // Look
         else if (currVerb.getName().equals("look")) {
             System.out.println(DAO.getRoomDescription());
-            currVerb.runCommand(null, null, myInventory, DAO.getRoomInventory());
+            currVerb.runCommand(null, null, DAO.getMyInventory(), DAO.getRoomInventory());
             return;
         }
 
@@ -66,7 +66,7 @@ myInventory.addItem(new IDCard());
     //
 
         if (currVerb.whichInventory() == Verb.inventorySpec.MY)
-            parser.parseCommandNoun(myInventory);
+            parser.parseCommandNoun(DAO.getMyInventory());
         else if (currVerb.whichInventory() == Verb.inventorySpec.ROOM)
             parser.parseCommandNoun(DAO.getRoomInventory());
 
@@ -96,7 +96,7 @@ myInventory.addItem(new IDCard());
         }
 
         // for inventory of ANY specified, try applying verb to MyInventory then RoomInventory
-        else if (! parser.parseCommandNoun(myInventory))
+        else if (! parser.parseCommandNoun(DAO.getMyInventory()))
             parser.parseCommandNoun(DAO.getRoomInventory());
         Noun currNoun = parser.getNoun();
 
@@ -107,14 +107,14 @@ myInventory.addItem(new IDCard());
 //        if (parser.parsePrepPhrase (myInventory))
 //            prepNoun = parser.getPrepNoun();
 
-        Noun prepNoun = parser.parsePrepPhrase (myInventory);
+        Noun prepNoun = parser.parsePrepPhrase (DAO.getMyInventory());
         if (prepNoun==null || prepNoun.isUnknown())
             prepNoun = parser.parsePrepPhrase (DAO.getRoomInventory());
         if (prepNoun==null || prepNoun.isUnknown())
             prepNoun = parser.parsePrepPhrase (DAO.getRoomOtherInventory());
 
         // run command with the noun and prepositional noun
-        currVerb.runCommand(currNoun, prepNoun, myInventory, DAO.getRoomInventory());
+        currVerb.runCommand(currNoun, prepNoun, DAO.getMyInventory(), DAO.getRoomInventory());
     }
 
 }

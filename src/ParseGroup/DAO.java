@@ -1,5 +1,6 @@
 package ParseGroup;
 
+import Nouns.Noun;
 import Nouns.NounInventory;
 import Rooms.Room;
 
@@ -10,6 +11,11 @@ public class DAO {
 
     public enum ConduomStatus {NONE, HELD, GONE};
     public static ConduomStatus conduomStatus = ConduomStatus.NONE;
+
+
+//
+// room global support
+//
 
     private static Room currRoom = null;
 
@@ -32,8 +38,22 @@ public class DAO {
         { return currRoom.goDirection(direction); }
 
 
+//
+// myInventory global support
+//
+
+    public static NounInventory myInventory = null;
+
+    public static void myInventoryAdd(Noun item)
+        { myInventory.addItem(item); }
+
+    public static NounInventory getMyInventory()
+        { return myInventory; }
+
+
     static {
         conduomStatus = ConduomStatus.NONE;
+        myInventory = new NounInventory();
     }
 
 }
