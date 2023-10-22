@@ -12,6 +12,7 @@ import Verb.Go;
 import Verb.Touch;
 import Verb.Talk;
 import Verb.Fill;
+import Verb.Put;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class LoadVerbs {
         verbList.add (new Take());
         verbList.add (new Eat());
         verbList.add (new Drop());
+        verbList.add (new Put());
         verbList.add (new Look());
         verbList.add (new Go());
         verbList.add (new Touch());

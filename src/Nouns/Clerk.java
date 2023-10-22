@@ -1,6 +1,8 @@
 package Nouns;
 
 
+import ParseGroup.DAO;
+
 import java.util.Scanner;
 
 public class Clerk extends Noun {
@@ -21,19 +23,29 @@ public class Clerk extends Noun {
                 // longDescription
                 "Quiki Mart clerk behind counter, looks tired and over worked.  Probably wants to go home."
         );
+
     }
 
-    public void talk(String prepNoun, NounInventory inventory) {
-        if (prepNoun.equals("condom")) {
-            System.out.println("After looking around to make certain you're alone, \n"
-                    +"you quietly ask the clerk if he has any available behind the counter.\n"
-            );
-
-            System.out.println("Clerk: \"Sure thing buddy:\"");
-            purchaseCondom (inventory);
-        }
-        else
+    public void talk(Noun prepNoun, NounInventory inventory) {
+        if (prepNoun == null) {
             System.out.printf("\"Will the Bengals make the playoffs?\"\nClerk: \"* meh *\"\n");
+        } else  if (!prepNoun.isClass("Nouns.Condom")) {
+            System.out.printf("Uhh?  The %s, what do I know?.", prepNoun.getName());
+        } else if (DAO.conduomStatus == DAO.ConduomStatus.HELD) {
+            System.out.println("You don't need another one...go away.");
+        } else {
+            System.out.println("After looking around to make certain you're alone, \n"
+                    + "you quietly ask the clerk if he has any available behind the counter.\n");
+
+            if (DAO.conduomStatus == DAO.ConduomStatus.NONE)
+                System.out.println("Clerk: \"Sure thing buddy:\"");
+            else
+                System.out.println("Clerk: \"Another one so soon?:\"");
+
+            purchaseCondom(inventory);
+            DAO.conduomStatus = DAO.ConduomStatus.HELD;
+        }
+
     }
 
     private void purchaseCondom (NounInventory inventory) {
@@ -76,7 +88,6 @@ public class Clerk extends Noun {
         System.out.println(msg);
 
         inventory.addItem(new Condom(modifier));
-
     }
 
 }

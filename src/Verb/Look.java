@@ -16,7 +16,7 @@ public class Look extends Verb {
         );
     }
 
-    public void runCommand(Noun noun, String prepNoun, NounInventory myInventory, NounInventory roomInventory) {
+    public void runCommand(Noun noun, Noun prepNoun, NounInventory myInventory, NounInventory roomInventory) {
         System.out.println("You see around you: " + roomInventory.getList());
     }
 

@@ -2,9 +2,9 @@ package Rooms;
 
 
 import Nouns.Clerk;
+import Nouns.Condom;
 import Nouns.Shelves;
 import Nouns.SmallSign;
-import Rooms.Room;
 
 public class QuikiMart extends Room {
 
@@ -21,6 +21,7 @@ public class QuikiMart extends Room {
         );
 
         addExit ("west", "AtQuikiMart");
+        addOtherItem(new Condom());
         addItem(new Clerk());
         addItem(new Shelves());
         addItem(new SmallSign());

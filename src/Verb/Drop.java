@@ -16,7 +16,7 @@ public class Drop extends Verb {
         );
     }
 
-    public void runCommand(Noun noun, String prepNoun, NounInventory myInventory, NounInventory roomInventory) {
+    public void runCommand(Noun noun, Noun prepNoun, NounInventory myInventory, NounInventory roomInventory) {
         if (noun == null) {
             System.out.println("You're not holding that.");
             return;
@@ -25,6 +25,7 @@ public class Drop extends Verb {
             return;
         }
 
+        noun.drop (prepNoun, myInventory, roomInventory);
         System.out.printf("The %s falls out of your hand.\n", noun.getDisplayName());
         myInventory.removeItem(noun);
         roomInventory.addItem(noun);

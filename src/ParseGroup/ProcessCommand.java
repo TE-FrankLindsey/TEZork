@@ -1,28 +1,33 @@
 package ParseGroup;
 
-import Nouns.NounInventory;
-import Nouns.Noun;
+import Nouns.*;
 import Rooms.Room;
 import Rooms.RoomMap;
 import Verb.Verb;
-import ParseGroup.Parser;
+
+
 
 public class ProcessCommand {
 
     public NounInventory myInventory = new NounInventory();
-    public NounInventory directionInventory = new NounInventory();
     private Parser parser;
 
     RoomMap roomMap = new RoomMap();
 
     private Room currRoom = null;
 
+
     public ProcessCommand () {
         parser = new Parser ();
 
+        System.out.println("\n\n");
         currRoom = roomMap.getRoom("AtAlly");
         System.out.println(currRoom.getDescription());
         System.out.println("You see around you: " + currRoom.getInventory().getList());
+
+// !!! FIXME - remove
+myInventory.addItem(new Condom());
+myInventory.addItem(new IDCard());
     }
 
     //
@@ -47,14 +52,14 @@ public class ProcessCommand {
 
         // Inventory
         if (currVerb.getName().equals("inventory")) {
-            currVerb.runCommand(null, "", myInventory, currRoom.getInventory());
+            currVerb.runCommand(null, null, myInventory, currRoom.getInventory());
             return;
         }
 
         // Look
         else if (currVerb.getName().equals("look")) {
             System.out.println(currRoom.getDescription());
-            currVerb.runCommand(null, "", myInventory, currRoom.getInventory());
+            currVerb.runCommand(null, null, myInventory, currRoom.getInventory());
             return;
         }
 
@@ -79,13 +84,17 @@ public class ProcessCommand {
                 System.out.println("You cannot go that direction.");
                 return;
             }
-            else {
-                // resolve room title to room, make current room and display room information
-                currRoom = roomMap.getRoom(movementDirection);
-                System.out.println(currRoom.getDescription());
-                System.out.println("You see around you: " + currRoom.getInventory().getList());
+
+            if (roomMap.getRoom(movementDirection).isLocked()) {
+                System.out.println("You can't go that way.  The door is locked.");
                 return;
             }
+
+            // resolve room title to room, make current room and display room information
+            currRoom = roomMap.getRoom(movementDirection);
+            System.out.println(currRoom.getDescription());
+            System.out.println("You see around you: " + currRoom.getInventory().getList());
+            return;
         }
 
         // for inventory of ANY specified, try applying verb to MyInventory then RoomInventory
@@ -96,9 +105,15 @@ public class ProcessCommand {
     //
     // parse for the prepositional phrase
     //
-        String prepNoun = "";
-        if (parser.parsePrepPhrase (myInventory))
-            prepNoun = parser.getPrepNoun();
+//        String prepNoun = "";
+//        if (parser.parsePrepPhrase (myInventory))
+//            prepNoun = parser.getPrepNoun();
+
+        Noun prepNoun = parser.parsePrepPhrase (myInventory);
+        if (prepNoun==null || prepNoun.isUnknown())
+            prepNoun = parser.parsePrepPhrase (currRoom.getInventory());
+        if (prepNoun==null || prepNoun.isUnknown())
+            prepNoun = parser.parsePrepPhrase (currRoom.getOtherInventory());
 
         // run command with the noun and prepositional noun
         currVerb.runCommand(currNoun, prepNoun, myInventory, currRoom.getInventory());

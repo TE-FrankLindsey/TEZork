@@ -16,7 +16,7 @@ public class Eat extends Verb {
         );
     }
 
-    public void runCommand(Noun noun, String prepNoun, NounInventory myInventory, NounInventory roomInventory) {
+    public void runCommand(Noun noun, Noun prepNoun, NounInventory myInventory, NounInventory roomInventory) {
         if (noun == null) {
             System.out.println("I don't have one of those.");
             return;

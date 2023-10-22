@@ -39,6 +39,8 @@ public abstract class SyntaxElement {
         this.longDescription = null;
     }
 
+    public boolean nameEquals(String name)
+        { return name.equalsIgnoreCase(name); }
 
     public String getLongDescription () {
         visited = true;

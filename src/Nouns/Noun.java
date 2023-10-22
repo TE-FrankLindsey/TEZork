@@ -23,16 +23,23 @@ public abstract class Noun extends SyntaxElement {
     public String getModifier()
         { return modifier; }
 
-    public boolean isAmbiguous() {
-        return ambiguous;
-    }
+    public boolean isUnknown()
+        { return getClass().getName().equals("Nouns.UnknownNoun"); }
 
-    public void setAmbiguous(boolean ambiguous) {
-        this.ambiguous = ambiguous;
-    }
+    public boolean isClass(String className)
+    { return getClass().getName().equals(className); }
+
+    public boolean isAmbiguous()
+        { return ambiguous; }
+
+    public void setAmbiguous(boolean ambiguous)
+        { this.ambiguous = ambiguous; }
 
     public String getDisplayName()
-        { return (modifier!=null && !modifier.equals("")) ? String.format("%s %s", modifier, name) : name; }
+        { return (modifier.isBlank()) ? name : String.format("%s %s", modifier, name); }
+
+    public String getStateName()
+        { return getDisplayName(); }
 
     public Noun () {
         super(null, null,null,null);
@@ -70,11 +77,19 @@ public abstract class Noun extends SyntaxElement {
     }
 
     public boolean nameEquals (String modifier, String name) {
-        if (modifier.isBlank() && this.name.equals(name))
-            return true;
+        for (String someName : synonyms)
+            if (someName.equals(name)) {
+                if (modifier.isBlank() || this.modifier.equalsIgnoreCase(modifier))
+                    return true;
+            }
 
-        if (this.modifier.equals(modifier) && this.name.equals(name))
-            return true;
+
+
+//        if (modifier.isBlank() && this.name.equalsIgnoreCase(name))
+//            return true;
+//
+//        if (this.modifier.equals(modifier) && this.name.equalsIgnoreCase(name))
+//            return true;
 
         return false;
     }
@@ -106,6 +121,14 @@ public abstract class Noun extends SyntaxElement {
         roomInventory.removeItem(this);
     };
 
+    public void drop(Noun prepNoun, NounInventory myInventory, NounInventory roomInventory) {
+//        Clerk.cStat = Clerk.ConduomStatus.GONE;
+    };
+
+    public void put(Noun prepNoun, NounInventory myInventory, NounInventory roomInventory) {
+        int x = 0;
+//        Clerk.cStat = Clerk.ConduomStatus.GONE;
+    };
     public void touch()
         { System.out.printf("You touched the %s.  Did that give you a thrill?", getDisplayName()); }
 
@@ -113,13 +136,13 @@ public abstract class Noun extends SyntaxElement {
         {
             System.out.println(getDescription()); }
 
-    public void talk(String prepNoun, NounInventory inventory)
+    public void talk(Noun prepNoun, NounInventory inventory)
         { System.out.printf("\"Will the Bengals make the playoffs?\""); }
 
-    public boolean open(String prepNoun, NounInventory myInventory)
+    public boolean open(Noun prepNoun, NounInventory myInventory)
         { return false; }
 
-    public boolean fill(String prepNoun, NounInventory myInventory)
+    public boolean fill(Noun prepNoun, NounInventory myInventory)
         { return false; }
 
 }

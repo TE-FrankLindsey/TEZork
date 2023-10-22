@@ -18,7 +18,7 @@ public abstract class Verb extends SyntaxElement {
         super (name, synonyms);
     }
 
-    public abstract void runCommand(Noun noun, String prepNoun, NounInventory myInventory, NounInventory roomInventory);
+    public abstract void runCommand(Noun noun, Noun prepNoun, NounInventory myInventory, NounInventory roomInventory);
 
 
     // textIn passed in is substring from user command, starting at current parse ptr to EOL

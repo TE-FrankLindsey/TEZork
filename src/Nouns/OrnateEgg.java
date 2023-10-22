@@ -15,7 +15,7 @@ public class OrnateEgg extends Noun {
             // modifier
             "ornate",
             // shortDescription
-            "looks like an ornate egg! Gold plated and jewel encrusted!",
+            "Looks like an ornate egg! Gold plated and jewel encrusted!",
             // longDescription
             "There is a glint of something in the rubble, looks like an ornate egg! "
             + "...gold plated and jewel encrusted!"

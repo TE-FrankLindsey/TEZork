@@ -21,6 +21,7 @@ public class Condom extends Noun {
                 // longDescription
                 "Looks like it can hold some water."
         );
+
     }
 
     public Condom(String modifier) {
@@ -41,21 +42,39 @@ public class Condom extends Noun {
         );
     }
 
+
+    public String getStateName() {
+        return String.format("%s %s(%s)", modifier, name, (filled) ? "filled with water" : "empty");
+    }
+
     public void examine() {
         System.out.println(getDescription());
     }
 
-    public boolean fill(String prepNoun, NounInventory roomInventory) {
-        if (prepNoun.equals("water") && roomInventory.contains("water", "fountain")) {
+    public boolean fill(Noun prepNoun, NounInventory roomInventory) {
+        if (filled) {
+            System.out.println("The condom is already full.");
+        } else if (prepNoun == null) {
+            System.out.println("Fill the condom with what?");
+        } else  if (!prepNoun.isClass("Nouns.Water") && !prepNoun.isClass("Nouns.WaterFountain")) {
+            System.out.printf("I don't see any %s to fill the condom.\n", prepNoun.getName());
+        } else {
+
             shortDescription = "Water filled condom.";
             longDescription = "Water filled condom.";
             filled = true;
-            System.out.println("Wow, who knew a condom could hold so much water?");
+            System.out.println("Wow!  Who knew a condom could hold so much water?");
             return true;
         }
 
         return false;
     }
 
+    public void drop(Noun prepNoun, NounInventory myInventory, NounInventory roomInventory)
+        { System.out.println("Put the condom on th efire"); }
+
+
+    public void put(Noun prepNoun, NounInventory myInventory, NounInventory roomInventory)
+    { System.out.println("Put the condom on th efire"); }
 
 }

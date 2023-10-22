@@ -19,7 +19,7 @@ public class Scan extends Verb {
     public inventorySpec whichInventory()
         { return inventorySpec.MY; }
 
-    public void runCommand(Noun noun, String prepNoun, NounInventory myInventory, NounInventory roomInventory) {
+    public void runCommand(Noun noun, Noun prepNoun, NounInventory myInventory, NounInventory roomInventory) {
 
         if (noun == null)
             System.out.println("What do you want me to scan?");
