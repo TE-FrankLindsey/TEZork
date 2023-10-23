@@ -40,6 +40,12 @@ public abstract class SyntaxElement {
     }
 
 
+    public boolean isClass(String className)
+        { return getClass().getName().equals(className); }
+
+    public boolean nameEquals(String name)
+        { return name.equalsIgnoreCase(name); }
+
     public String getLongDescription () {
         visited = true;
         return longDescription;

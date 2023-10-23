@@ -1,7 +1,7 @@
 package Verb;
 
-import Nouns.NounInventory;
-import Nouns.Noun;
+import Noun.NounInventory;
+import Noun.Noun;
 import SyntaxElement.SyntaxElement;
 
 public abstract class Verb extends SyntaxElement {
@@ -18,7 +18,7 @@ public abstract class Verb extends SyntaxElement {
         super (name, synonyms);
     }
 
-    public abstract void runCommand(Noun noun, String prepNoun, NounInventory myInventory, NounInventory roomInventory);
+    public abstract void runCommand(Noun noun, Noun prepNoun, NounInventory roomInventory);
 
 
     // textIn passed in is substring from user command, starting at current parse ptr to EOL

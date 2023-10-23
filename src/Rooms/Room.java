@@ -1,7 +1,7 @@
 package Rooms;
 
-import Nouns.Noun;
-import Nouns.NounInventory;
+import Noun.Noun;
+import Noun.NounInventory;
 import SyntaxElement.SyntaxElement;
 
 import java.util.HashMap;
@@ -9,7 +9,15 @@ import java.util.Map;
 
 public class Room extends SyntaxElement{
 
-    private Map<String, String> directions = new HashMap<>();
+    protected boolean locked = false;
+
+    public boolean isLocked()
+        { return locked; }
+
+    public void setLocked(boolean locked)
+        { this.locked = locked; }
+
+    protected Map<String, String> directions = new HashMap<>();
 
     public Map<String, String> getDirections()
         { return directions; }
@@ -26,17 +34,28 @@ public class Room extends SyntaxElement{
     }
 
     protected NounInventory inventory = new NounInventory();
+    protected NounInventory otherInventory = new NounInventory();
 
     public NounInventory getInventory() {
         return inventory;
     }
 
+    public NounInventory getOtherInventory() {
+        return otherInventory;
+    }
     public void addItem (Noun someThing) {
         inventory.addItem(someThing);
     }
 
+    public void addOtherItem (Noun someThing) {
+        otherInventory.addItem(someThing);
+    }
+
+
+
     protected Room (String name, String shortDesc, String longDesc) {
         super(name, shortDesc, longDesc);
+        this.locked = false;
     }
 
     public String goDirection(String direction) {
@@ -46,5 +65,6 @@ public class Room extends SyntaxElement{
         String gotoRoom = directions.get(direction);
         return gotoRoom;
     }
+
 
 }

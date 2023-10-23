@@ -1,28 +1,30 @@
 package ParseGroup;
 
-import Nouns.NounInventory;
-import Nouns.Noun;
-import Rooms.Room;
+import Noun.*;
 import Rooms.RoomMap;
 import Verb.Verb;
-import ParseGroup.Parser;
+
+
 
 public class ProcessCommand {
 
-    public NounInventory myInventory = new NounInventory();
-    public NounInventory directionInventory = new NounInventory();
+//    public NounInventory myInventory = new NounInventory();
     private Parser parser;
 
     RoomMap roomMap = new RoomMap();
 
-    private Room currRoom = null;
 
     public ProcessCommand () {
         parser = new Parser ();
 
-        currRoom = roomMap.getRoom("AtAlly");
-        System.out.println(currRoom.getDescription());
-        System.out.println("You see around you: " + currRoom.getInventory().getList());
+        System.out.println("\n\n");
+        DAO.setCurrRoom(roomMap.getRoom("AtAlly"));
+        System.out.println(DAO.getRoomDescription());
+        System.out.println("You see around you: " + DAO.getRoomInventory().getList());
+
+// !!! FIXME - remove
+DAO.myInventoryAdd(new Condom());
+DAO.myInventoryAdd(new IDCard());
     }
 
     //
@@ -35,8 +37,10 @@ public class ProcessCommand {
     //
     // try to find verb in user submitted command
     //
+String someString = parser.remainingText();
+
         if (!parser.parseCommandVerb() || parser.getVerb()==null) {
-            System.out.println("I have no idea what you are asking of me.\n");
+            System.out.printf("I have no idea what you are asking of me.\n");
             return;
         }
         Verb currVerb = parser.getVerb();
@@ -45,63 +49,89 @@ public class ProcessCommand {
     // process all 'verb only' commands
     //
 
+someString = parser.remainingText();
         // Inventory
-        if (currVerb.getName().equals("inventory")) {
-            currVerb.runCommand(null, "", myInventory, currRoom.getInventory());
+        if (currVerb.isClass("Verb.VerbInventory")) {
+            currVerb.runCommand(null, null, DAO.getRoomInventory());
             return;
         }
 
         // Look
-        else if (currVerb.getName().equals("look")) {
-            System.out.println(currRoom.getDescription());
-            currVerb.runCommand(null, "", myInventory, currRoom.getInventory());
+someString = parser.remainingText();
+        if (currVerb.isClass("Verb.Look")) {
+            System.out.println(DAO.getRoomDescription());
+            currVerb.runCommand(null, null, DAO.getRoomInventory());
+            DAO.showGiveADamns();
             return;
         }
 
     //
     // process verb / noun commands
     //
-
-        if (currVerb.whichInventory() == Verb.inventorySpec.MY)
-            parser.parseCommandNoun(myInventory);
-        else if (currVerb.whichInventory() == Verb.inventorySpec.ROOM)
-            parser.parseCommandNoun(currRoom.getInventory());
+//
+//        if (currVerb.whichInventory() == Verb.inventorySpec.MY)
+//            parser.parseCommandNoun(DAO.getMyInventory());
+//        else if (currVerb.whichInventory() == Verb.inventorySpec.ROOM)
+//            parser.parseCommandNoun(DAO.getRoomInventory());
 
     //
     // handle movement north, south, west, east
     //
-        else if (currVerb.whichInventory() == Verb.inventorySpec.DIRECTION) {
+someString = parser.remainingText();
+        if (currVerb.whichInventory() == Verb.inventorySpec.DIRECTION) {
             // resolve direction to room title
-            String requestedDirection = parser.parseDirection(currRoom.getDirections());
-            String movementDirection = currRoom.goDirection(requestedDirection);
+            String requestedDirection = parser.parseDirection(DAO.getRoomDirections());
+            String movementDirection = DAO.goRoomDirection(requestedDirection);
 
             if (movementDirection == null) {
                 System.out.println("You cannot go that direction.");
                 return;
             }
-            else {
-                // resolve room title to room, make current room and display room information
-                currRoom = roomMap.getRoom(movementDirection);
-                System.out.println(currRoom.getDescription());
-                System.out.println("You see around you: " + currRoom.getInventory().getList());
+
+            if (roomMap.getRoom(movementDirection).isLocked()) {
+                System.out.println("You can't go that way.  The door is locked.");
                 return;
             }
+
+            // resolve room title to room, make current room and display room information
+            DAO.setCurrRoom(roomMap.getRoom(movementDirection));
+            System.out.println(DAO.getRoomDescription());
+            System.out.println("You see around you: " + DAO.getRoomInventory().getList());
+            return;
         }
 
+someString = parser.remainingText();
+        if (currVerb.whichInventory() == Verb.inventorySpec.MY)
+            parser.parseCommandNoun(DAO.getMyInventory());
+        else if (currVerb.whichInventory() == Verb.inventorySpec.ROOM)
+            parser.parseCommandNoun(DAO.getRoomInventory());
+
+
+//        if (currVerb.whichInventory() == Verb.inventorySpec.MY)
+//            parser.parseCommandNoun(DAO.getMyInventory());
+//        else if (currVerb.whichInventory() == Verb.inventorySpec.ROOM)
+//            parser.parseCommandNoun(DAO.getRoomInventory());
+
         // for inventory of ANY specified, try applying verb to MyInventory then RoomInventory
-        else if (! parser.parseCommandNoun(myInventory))
-            parser.parseCommandNoun(currRoom.getInventory());
+        else if (! parser.parseCommandNoun(DAO.getMyInventory()))
+            parser.parseCommandNoun(DAO.getRoomInventory());
+someString = parser.remainingText();
+
         Noun currNoun = parser.getNoun();
 
-    //
-    // parse for the prepositional phrase
-    //
-        String prepNoun = "";
-        if (parser.parsePrepPhrase (myInventory))
-            prepNoun = parser.getPrepNoun();
+        //
+        // parse for the prepositional phrase
+        //
+        Noun prepNoun = parser.parsePrepPhrase (DAO.getMyInventory());
+        if (prepNoun==null || prepNoun.isUnknown()) {
+            prepNoun = parser.parsePrepPhrase (DAO.getRoomInventory());
+        }
+        if (prepNoun==null || prepNoun.isUnknown()) {
+            prepNoun = parser.parsePrepPhrase (DAO.getRoomOtherInventory());
+        }
 
         // run command with the noun and prepositional noun
-        currVerb.runCommand(currNoun, prepNoun, myInventory, currRoom.getInventory());
+        currVerb.runCommand(currNoun, prepNoun, DAO.getRoomInventory());
     }
 
 }

@@ -1,7 +1,8 @@
 package Verb;
 
-import Nouns.NounInventory;
-import Nouns.Noun;
+import Noun.NounInventory;
+import Noun.Noun;
+import ParseGroup.DAO;
 
 public class Eat extends Verb {
 
@@ -16,7 +17,7 @@ public class Eat extends Verb {
         );
     }
 
-    public void runCommand(Noun noun, String prepNoun, NounInventory myInventory, NounInventory roomInventory) {
+    public void runCommand(Noun noun, Noun prepNoun, NounInventory roomInventory) {
         if (noun == null) {
             System.out.println("I don't have one of those.");
             return;
@@ -28,8 +29,10 @@ public class Eat extends Verb {
             return;
         }
 
-        System.out.printf("Yum!  My favorite, a big %s.\n", noun.getDisplayName());
-        myInventory.removeItem(noun);
+        if (! noun.eat()) {
+            System.out.printf("Yum!  My favorite, a big %s.\n", noun.getDisplayName());
+            DAO.myInventory.removeItem(noun);
+        }
     }
 
 }

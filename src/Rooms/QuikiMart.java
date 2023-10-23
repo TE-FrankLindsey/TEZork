@@ -1,10 +1,10 @@
 package Rooms;
 
 
-import Nouns.Clerk;
-import Nouns.Shelves;
-import Nouns.SmallSign;
-import Rooms.Room;
+import Noun.Clerk;
+import Noun.Condom;
+import Noun.Shelves;
+import Noun.SmallSign;
 
 public class QuikiMart extends Room {
 
@@ -21,6 +21,7 @@ public class QuikiMart extends Room {
         );
 
         addExit ("west", "AtQuikiMart");
+        addOtherItem(new Condom());
         addItem(new Clerk());
         addItem(new Shelves());
         addItem(new SmallSign());

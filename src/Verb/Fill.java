@@ -1,7 +1,7 @@
 package Verb;
 
-import Nouns.NounInventory;
-import Nouns.Noun;
+import Noun.NounInventory;
+import Noun.Noun;
 
 public class Fill extends Verb {
 
@@ -16,7 +16,7 @@ public class Fill extends Verb {
         );
     }
 
-    public void runCommand(Noun noun, String prepNoun, NounInventory myInventory, NounInventory roomInventory) {
+    public void runCommand(Noun noun, Noun prepNoun, NounInventory roomInventory) {
         if (noun == null) {
             System.out.println("You're not holding that.");
             return;
@@ -25,8 +25,10 @@ public class Fill extends Verb {
             return;
         }
 
-        if (! noun.fill(prepNoun, roomInventory))
-            System.out.printf("What do you want to fill %s with?\n", noun.getDisplayName());
+        noun.fill(prepNoun, roomInventory);
+
+//        if (! noun.fill(prepNoun, roomInventory))
+//            System.out.printf("What do you want to fill %s with?\n", noun.getDisplayName());
 //        myInventory.removeItem(noun);
 //        roomInventory.addItem(noun);
     }

@@ -1,7 +1,5 @@
-package Nouns;
+package Noun;
 
-
-import Nouns.Noun;
 
 public class RedApple extends Noun {
 

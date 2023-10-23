@@ -1,7 +1,8 @@
 package Verb;
 
-import Nouns.Noun;
-import Nouns.NounInventory;
+import Noun.Noun;
+import Noun.NounInventory;
+import ParseGroup.DAO;
 
 public class VerbInventory extends Verb {
 
@@ -16,8 +17,8 @@ public class VerbInventory extends Verb {
         );
     }
 
-    public void runCommand(Noun noun, String prepNoun, NounInventory myInventory, NounInventory roomInventory) {
+    public void runCommand(Noun noun, Noun prepNoun, NounInventory roomInventory) {
 
-        System.out.println("You are carrying: " + myInventory.getList() + ".");
+        System.out.println("You are carrying: " + DAO.myInventory.getList() + ".");
     }
 }

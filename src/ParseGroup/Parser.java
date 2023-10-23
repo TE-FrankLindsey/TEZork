@@ -1,8 +1,9 @@
 package ParseGroup;
 
 
-import Nouns.NounInventory;
-import Nouns.Noun;
+import Noun.NounInventory;
+import Noun.Noun;
+import Noun.UnknownNoun;
 import Verb.Verb;
 
 import java.util.List;
@@ -15,10 +16,11 @@ public class Parser {
     protected Verb currVerb = null;
 
     protected Noun currNoun = null;
-    protected String prepNoun = "";
+    protected Noun prepNoun = null;
 
     protected enum NounStatus {SUCCESS, FAILURE;}
     NounStatus rtnStatus = NounStatus.FAILURE;
+
 
     public Verb getVerb()
         { return currVerb; }
@@ -26,17 +28,19 @@ public class Parser {
     public Noun getNoun()
         { return currNoun; }
 
-    public String getPrepNoun()
+    public Noun getPrepNoun()
         { return prepNoun; }
 
     public boolean isNounUnique()
         { return rtnStatus==NounStatus.SUCCESS; }
 
     private NounInventory inventory;
-    
+
+//    private NounInventory allNouns = new NounInventory();
     private List<Verb> allVerbs;
 
     public Parser () {
+//        allNouns.loadNouns();
         allVerbs = LoadVerbs.load();
     }
 
@@ -44,6 +48,11 @@ public class Parser {
         { return parserPtr; }
     public void setParserPtr(int idx)
         { parserPtr = idx; }
+
+    private boolean atEOL () {
+        eatBlanks ();
+        return parserPtr == command.length();
+    }
 
     // move parser pointer by indicated length
     protected void advanceParserPtr(int length)
@@ -84,6 +93,7 @@ public class Parser {
             } else if (eatSubString("a ")) {
             } else if (eatSubString("an ")) {
             } else if (eatSubString("to ")) {
+            } else if (eatSubString("from ")) {
             } else if (eatSubString("of ")) {
             } else if (eatSubString("the ")) {
             } else {
@@ -98,7 +108,7 @@ public class Parser {
         // prep the command by reducing multiple blanks to single blank and make command lower case
         while (this.command.contains("  "))
             this.command = this.command.replace("  ", " ");
-        this.command = this.command.toLowerCase();
+//        this.command = this.command.toLowerCase();
 
         parserPtr = 0;
 
@@ -118,21 +128,19 @@ public class Parser {
         return currVerb!=null;
     }
 
-    public boolean parseCommandNoun (NounInventory myInventory) {
-
-        inventory = myInventory;
+    public boolean parseCommandNoun (NounInventory srcInventory) {
+        inventory = srcInventory;
         eatBlanks();
         rtnStatus = NounStatus.FAILURE;
 
-        for (int i=0; i!=myInventory.getSize(); i++)
-            if ((rtnStatus = parseNoun(myInventory.getItem(i))) == NounStatus.SUCCESS)
+        for (int i=0; i!=srcInventory.getSize(); i++)
+            if ((rtnStatus = parseNoun(srcInventory.getItem(i))) == NounStatus.SUCCESS)
                 return true;
 
         return false;
     }
 
     private boolean parseVerb (Verb someVerb) {
-
         // search each synonym in verb for match of text
         //  if found the parser pointer will advance length of synonym
         for (int i=0; i!=someVerb.getSynonymCount(); i++) {
@@ -157,17 +165,12 @@ public class Parser {
 
             // test for match with noun Synonym
 
-//            for (int i=0; i!=someNoun.getSynonymCount(); i++) {
-//
-//                if (eatSubString(someNoun.getSynonym(i))) {
             if (matchNounSynonym(someNoun)) {
                 currNoun = someNoun;
                 return NounStatus.SUCCESS;
             }
         }
 
-        // if modifier failed to match then test for unmodified noun
-//        else if (eatSubString(someNoun.getName())) {
         else if (matchNounSynonym(someNoun)) {
 
             currNoun = someNoun;
@@ -178,6 +181,7 @@ public class Parser {
             return NounStatus.SUCCESS;
         }
 
+        currNoun = null;
         // on failure restore the parser pointer and return false
         parserPtr = tmpParserPtr;
         return NounStatus.FAILURE;
@@ -190,33 +194,34 @@ public class Parser {
 
         return false;
     }
-    public boolean parsePrepPhrase (NounInventory inventory) {
-
-        prepNoun = null;
-
+    public Noun parsePrepPhrase (NounInventory inventory) {
+        // eat connecting words
         eatBlanks();
 
-        if (eatSubString("with ")) {
-        } else if (eatSubString("using ")) {
-        } else if (eatSubString("to ")) {
-        } else if (eatSubString("into ")) {
-        } else if (eatSubString("from ")) {
-        } else if (eatSubString("about ")) {
+        // save the parser pointer, on parse failure set parse pointer back to previous position
+        int tmpParserPtr = parserPtr;
+
+        if (! (eatSubString("with ")
+                || eatSubString("using ")
+                || eatSubString("to ")
+                || eatSubString("into ")
+                || eatSubString("from ")
+                || eatSubString("about "))) {
+            // on failure restore the parser pointer and return false
+            parserPtr = tmpParserPtr;
+            return null;
         }
-        else
-            return false;
 
         eatBlanks();
 
-        prepNoun = "";
-        String[] prepNouns = {"condom", "id card", "card", "water"};
-        for (String someNoun : prepNouns)
-            if (eatSubString(someNoun)) {
-                prepNoun = someNoun;
-                return true;
-            }
+        for (int i=0; i!=inventory.getSize(); i++)
+            if (parseNoun(inventory.getItem(i)) == NounStatus.SUCCESS)
+                return inventory.getItem(i);
 
-        return false;
+        // on failure restore the parser pointer and return false
+        String defaultName = remainingText();
+        parserPtr = tmpParserPtr;
+        return (atEOL()) ? null : new UnknownNoun(defaultName, "");
     }
 
 

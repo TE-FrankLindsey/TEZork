@@ -1,7 +1,8 @@
 package Verb;
 
-import Nouns.NounInventory;
-import Nouns.Noun;
+import Noun.NounInventory;
+import Noun.Noun;
+import ParseGroup.DAO;
 
 public class Talk extends Verb {
 
@@ -19,25 +20,23 @@ public class Talk extends Verb {
     public inventorySpec whichInventory()
         { return inventorySpec.ROOM; }
 
-    public void runCommand(Noun noun, String prepNoun, NounInventory myInventory, NounInventory roomInventory) {
+    public void runCommand(Noun noun, Noun prepNoun, NounInventory roomInventory) {
 
         if (noun == null) {
             System.out.println("I don't see any such person here.");
-            return;
+        } else if (noun.getClass().getName() == "Nouns.UnknownNoun") {
+            System.out.printf("There is no %s around here.\n", noun.getName());
         } else if (noun.isAmbiguous()) {
             System.out.printf("Which %s did you want to talk to?\n", noun.getName());
-            return;
-        } else if (! noun.canTalk()) {
+        } else if (!noun.canTalk()) {
             System.out.printf("You find talking with %s very hard to do.", noun.getDisplayName());
-            return;
-        }
+        } else {
 
-        noun.talk(prepNoun, myInventory);
+            noun.talk(prepNoun, DAO.myInventory);
 
 //            if (! noun.talk(prepNoun, myInventory))
 //                System.out.printf("\"Will the Bengals make the playoffs?\"\nClerk: \"* meh *\"\n");
 //
         }
-
-
+    }
 }

@@ -1,8 +1,9 @@
 package Rooms;
 
 
-import Nouns.Water;
-import Nouns.WaterFountain;
+import Noun.BluePill;
+import Noun.RedPill;
+import Noun.WaterFountain;
 
 public class AllyLobby extends Room {
 
@@ -12,17 +13,18 @@ public class AllyLobby extends Room {
                 // name
                 "AllyLobby",
                 // shortDescription
-                "You're inside the lobby of the Ally building",
+                "Lobby of the Ally building.  Stairwell is blocked by a burning trashcan.  An exit to the east",
                 // longDescription
                 "You're standing in the lobby of the Ally building.\n" +
-                "There are two elevators here, one is stuck between floors," +
-                "the other is blocked by a trash can, currently on fire."
+                "There is an exit to the east.  An elevator is here, stuck between floors.\n" +
+                "And a stairwell, currently blocked by a trashcan, currently on fire."
         );
 
-        addExit ("east", "AtAlly");
 
+        addExit ("east", "AtAlly");
         addItem (new WaterFountain());
-        addItem (new Water());
+        addItem (new RedPill());
+        addItem (new BluePill());
     }
 
 }

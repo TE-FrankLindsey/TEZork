@@ -1,4 +1,4 @@
-package Nouns;
+package Noun;
 
 import SyntaxElement.SyntaxElement;
 
@@ -17,22 +17,27 @@ public abstract class Noun extends SyntaxElement {
     protected final static int POUR = 64;
     protected final static int SCAN = 128;
     protected final static int HIDE = 256;
+    protected final static int DRINK = 512;
 
     protected int attributes;
 
     public String getModifier()
         { return modifier; }
 
-    public boolean isAmbiguous() {
-        return ambiguous;
-    }
+    public boolean isUnknown()
+        { return getClass().getName().equals("Nouns.UnknownNoun"); }
 
-    public void setAmbiguous(boolean ambiguous) {
-        this.ambiguous = ambiguous;
-    }
+    public boolean isAmbiguous()
+        { return ambiguous; }
+
+    public void setAmbiguous(boolean ambiguous)
+        { this.ambiguous = ambiguous; }
 
     public String getDisplayName()
-        { return (modifier!=null && !modifier.equals("")) ? String.format("%s %s", modifier, name) : name; }
+        { return (modifier.isBlank()) ? name : String.format("%s %s", modifier, name); }
+
+    public String getStateName()
+        { return getDisplayName(); }
 
     public Noun () {
         super(null, null,null,null);
@@ -70,11 +75,19 @@ public abstract class Noun extends SyntaxElement {
     }
 
     public boolean nameEquals (String modifier, String name) {
-        if (modifier.isBlank() && this.name.equals(name))
-            return true;
+        for (String someName : synonyms)
+            if (someName.equals(name)) {
+                if (modifier.isBlank() || this.modifier.equalsIgnoreCase(modifier))
+                    return true;
+            }
 
-        if (this.modifier.equals(modifier) && this.name.equals(name))
-            return true;
+
+
+//        if (modifier.isBlank() && this.name.equalsIgnoreCase(name))
+//            return true;
+//
+//        if (this.modifier.equals(modifier) && this.name.equalsIgnoreCase(name))
+//            return true;
 
         return false;
     }
@@ -84,8 +97,7 @@ public abstract class Noun extends SyntaxElement {
     public boolean canEat ()
         { return (attributes&EAT) == EAT; }
     public boolean canTake ()
-        {
-            return (attributes&TAKE) == TAKE; }
+        { return (attributes&TAKE) == TAKE; }
     public boolean canTalk ()
         { return (attributes&TALK) == TALK; }
     public boolean canOpen ()
@@ -94,6 +106,8 @@ public abstract class Noun extends SyntaxElement {
         { return (attributes&SCAN) == SCAN; }
     public boolean canHide ()
         { return (attributes&HIDE) == HIDE; }
+    public boolean canDrink ()
+        { return (attributes&DRINK) == DRINK; }
 
 
 //
@@ -106,20 +120,36 @@ public abstract class Noun extends SyntaxElement {
         roomInventory.removeItem(this);
     };
 
+    public boolean eat()
+        { return false; };
+
+    public boolean drink()
+        { return false; };
+
+    public void drop(Noun prepNoun, NounInventory myInventory, NounInventory roomInventory) {
+//        Clerk.cStat = Clerk.ConduomStatus.GONE;
+    };
+
+    public void put(Noun prepNoun, NounInventory myInventory, NounInventory roomInventory) {
+        int x = 0;
+//        Clerk.cStat = Clerk.ConduomStatus.GONE;
+    };
     public void touch()
         { System.out.printf("You touched the %s.  Did that give you a thrill?", getDisplayName()); }
 
     public void examine(NounInventory myInventory, NounInventory roomInventory)
-        {
-            System.out.println(getDescription()); }
+        { System.out.println(getDescription()); }
 
-    public void talk(String prepNoun, NounInventory inventory)
+    public void talk(Noun prepNoun, NounInventory inventory)
         { System.out.printf("\"Will the Bengals make the playoffs?\""); }
 
-    public boolean open(String prepNoun, NounInventory myInventory)
+    public boolean open(Noun prepNoun, NounInventory myInventory)
         { return false; }
 
-    public boolean fill(String prepNoun, NounInventory myInventory)
+    public boolean scan()
+        { return false; }
+
+    public boolean fill(Noun prepNoun, NounInventory myInventory)
         { return false; }
 
 }

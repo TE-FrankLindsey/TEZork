@@ -1,4 +1,4 @@
-package Nouns;
+package Noun;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,10 +56,10 @@ inventory.add (new IDCard());
 
 
             // make list of all items without the HIDE attribute
-            list = tmpInventory.get(0).getDisplayName();
+            list = tmpInventory.get(0).getStateName();
             for (int i = 1; i != tmpInventory.size(); i++) {
                 list += (i==tmpInventory.size()-1) ? " and " : ", ";
-                list += tmpInventory.get(i).getDisplayName();
+                list += tmpInventory.get(i).getStateName();
             }
         }
 
@@ -73,6 +73,12 @@ inventory.add (new IDCard());
 
         return false;
     }
+
+    public boolean contains (Noun someNoun)
+        {
+
+String xx = getList();
+            return inventory.contains(someNoun); }
 
     public boolean markNounAmbiguous (Noun noun) {
 

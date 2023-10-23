@@ -1,5 +1,7 @@
-package Nouns;
+package Noun;
 
+
+import ParseGroup.DAO;
 
 public class OrnateEgg extends Noun {
 
@@ -15,7 +17,7 @@ public class OrnateEgg extends Noun {
             // modifier
             "ornate",
             // shortDescription
-            "looks like an ornate egg! Gold plated and jewel encrusted!",
+            "Looks like an ornate egg! Gold plated and jewel encrusted!",
             // longDescription
             "There is a glint of something in the rubble, looks like an ornate egg! "
             + "...gold plated and jewel encrusted!"
@@ -32,6 +34,7 @@ public class OrnateEgg extends Noun {
         myInventory.addItem(new BottleCap());
         roomInventory.removeItem(this);
         roomInventory.addItem(new IDCard());
+        DAO.addGiveADamns(-20, "Ornate egg deception");
     }
 
     public void examine(NounInventory myInventory, NounInventory roomInventory)
