@@ -1,4 +1,4 @@
-package Nouns;
+package Noun;
 
 
 import Rooms.Room;
@@ -7,7 +7,7 @@ public class AllyDoor extends Noun {
 
     private boolean locked = true;
 
-    public Room aRoom = null;
+//    public Room aRoom = null;
 
     public AllyDoor() {
 
@@ -46,6 +46,20 @@ public class AllyDoor extends Noun {
 
         return false;
     }
+
+    public boolean open () {
+
+            System.out.println("ID card unlocks the door.");
+            modifier = "unlocked";
+            shortDescription = "Unlocked door";
+            longDescription = "Previously locked door but now unlocked";
+            locked = false;
+            return true;
+
+    }
+
+    public boolean isLocked()
+        { return locked; }
 
     public void examine(NounInventory myInventory, NounInventory roomInventory)
         { System.out.println(getDescription()); }

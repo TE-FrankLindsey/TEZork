@@ -1,7 +1,8 @@
 package Verb;
 
-import Nouns.NounInventory;
-import Nouns.Noun;
+import Noun.NounInventory;
+import Noun.Noun;
+import ParseGroup.DAO;
 
 public class Take extends Verb {
 
@@ -19,7 +20,7 @@ public class Take extends Verb {
     public inventorySpec whichInventory()
         { return inventorySpec.ROOM; }
 
-    public void runCommand(Noun noun, Noun prepNoun, NounInventory myInventory, NounInventory roomInventory) {
+    public void runCommand(Noun noun, Noun prepNoun, NounInventory roomInventory) {
 
         if (noun == null) {
             System.out.println("I don't see that here.");
@@ -32,7 +33,7 @@ public class Take extends Verb {
             return;
         }
 
-        noun.take(myInventory, roomInventory);
+        noun.take(DAO.myInventory, roomInventory);
     }
 
 }

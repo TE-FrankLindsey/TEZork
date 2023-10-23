@@ -1,4 +1,6 @@
 
+import Noun.IDCard;
+import ParseGroup.DAO;
 import ParseGroup.Parser;
 import ParseGroup.ProcessCommand;
 
@@ -16,6 +18,7 @@ public class EventLoop {
     public void RunGame () {
         Parser parser = new Parser ();
         ProcessCommand processCommand = new ProcessCommand();
+        DAO.showGiveADamns();
 
         for (boolean keepGoing=true; keepGoing; ) {
 
@@ -25,6 +28,7 @@ public class EventLoop {
                 return;
             }
             processCommand.runCommand(textIn);
+//            DAO.showGiveADamns();
         }
     }
 

@@ -1,7 +1,8 @@
 package Verb;
 
-import Nouns.NounInventory;
-import Nouns.Noun;
+import Noun.NounInventory;
+import Noun.Noun;
+import ParseGroup.DAO;
 
 public class Talk extends Verb {
 
@@ -19,7 +20,7 @@ public class Talk extends Verb {
     public inventorySpec whichInventory()
         { return inventorySpec.ROOM; }
 
-    public void runCommand(Noun noun, Noun prepNoun, NounInventory myInventory, NounInventory roomInventory) {
+    public void runCommand(Noun noun, Noun prepNoun, NounInventory roomInventory) {
 
         if (noun == null) {
             System.out.println("I don't see any such person here.");
@@ -31,7 +32,7 @@ public class Talk extends Verb {
             System.out.printf("You find talking with %s very hard to do.", noun.getDisplayName());
         } else {
 
-            noun.talk(prepNoun, myInventory);
+            noun.talk(prepNoun, DAO.myInventory);
 
 //            if (! noun.talk(prepNoun, myInventory))
 //                System.out.printf("\"Will the Bengals make the playoffs?\"\nClerk: \"* meh *\"\n");

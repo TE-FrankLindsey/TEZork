@@ -1,4 +1,4 @@
-package Nouns;
+package Noun;
 
 
 public class Condom extends Noun {
@@ -56,7 +56,7 @@ public class Condom extends Noun {
             System.out.println("The condom is already full.");
         } else if (prepNoun == null) {
             System.out.println("Fill the condom with what?");
-        } else  if (!prepNoun.isClass("Nouns.Water") && !prepNoun.isClass("Nouns.WaterFountain")) {
+        } else  if (!prepNoun.isClass("Noun.Water") && !prepNoun.isClass("Noun.WaterFountain")) {
             System.out.printf("I don't see any %s to fill the condom.\n", prepNoun.getName());
         } else {
 

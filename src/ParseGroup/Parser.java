@@ -1,9 +1,9 @@
 package ParseGroup;
 
 
-import Nouns.NounInventory;
-import Nouns.Noun;
-import Nouns.UnknownNoun;
+import Noun.NounInventory;
+import Noun.Noun;
+import Noun.UnknownNoun;
 import Verb.Verb;
 
 import java.util.List;
@@ -93,6 +93,7 @@ public class Parser {
             } else if (eatSubString("a ")) {
             } else if (eatSubString("an ")) {
             } else if (eatSubString("to ")) {
+            } else if (eatSubString("from ")) {
             } else if (eatSubString("of ")) {
             } else if (eatSubString("the ")) {
             } else {
@@ -127,21 +128,19 @@ public class Parser {
         return currVerb!=null;
     }
 
-    public boolean parseCommandNoun (NounInventory myInventory) {
-
-        inventory = myInventory;
+    public boolean parseCommandNoun (NounInventory srcInventory) {
+        inventory = srcInventory;
         eatBlanks();
         rtnStatus = NounStatus.FAILURE;
 
-        for (int i=0; i!=myInventory.getSize(); i++)
-            if ((rtnStatus = parseNoun(myInventory.getItem(i))) == NounStatus.SUCCESS)
+        for (int i=0; i!=srcInventory.getSize(); i++)
+            if ((rtnStatus = parseNoun(srcInventory.getItem(i))) == NounStatus.SUCCESS)
                 return true;
 
         return false;
     }
 
     private boolean parseVerb (Verb someVerb) {
-
         // search each synonym in verb for match of text
         //  if found the parser pointer will advance length of synonym
         for (int i=0; i!=someVerb.getSynonymCount(); i++) {
@@ -182,7 +181,6 @@ public class Parser {
             return NounStatus.SUCCESS;
         }
 
-//        currNoun = (atEOL()) ? null : new UnknownNoun(remainingText(), "");
         currNoun = null;
         // on failure restore the parser pointer and return false
         parserPtr = tmpParserPtr;

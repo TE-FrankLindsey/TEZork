@@ -1,4 +1,4 @@
-package Nouns;
+package Noun;
 
 
 import ParseGroup.DAO;
@@ -29,21 +29,21 @@ public class Clerk extends Noun {
     public void talk(Noun prepNoun, NounInventory inventory) {
         if (prepNoun == null) {
             System.out.printf("\"Will the Bengals make the playoffs?\"\nClerk: \"* meh *\"\n");
-        } else  if (!prepNoun.isClass("Nouns.Condom")) {
+        } else  if (!prepNoun.isClass("Noun.Condom")) {
             System.out.printf("Uhh?  The %s, what do I know?.", prepNoun.getName());
-        } else if (DAO.conduomStatus == DAO.ConduomStatus.HELD) {
+        } else if (DAO.condomStatus == DAO.CondomStatus.HELD) {
             System.out.println("You don't need another one...go away.");
         } else {
             System.out.println("After looking around to make certain you're alone, \n"
                     + "you quietly ask the clerk if he has any available behind the counter.\n");
 
-            if (DAO.conduomStatus == DAO.ConduomStatus.NONE)
+            if (DAO.condomStatus == DAO.CondomStatus.NONE)
                 System.out.println("Clerk: \"Sure thing buddy:\"");
             else
                 System.out.println("Clerk: \"Another one so soon?:\"");
 
             purchaseCondom(inventory);
-            DAO.conduomStatus = DAO.ConduomStatus.HELD;
+            DAO.condomStatus = DAO.CondomStatus.HELD;
         }
 
     }

@@ -1,17 +1,17 @@
-package Nouns;
+package Noun;
 
 
-public class BlueApple extends Noun {
+public class BluePill extends Noun {
 
-    public BlueApple() {
+    public BluePill() {
 
         super(
                 // attributes
                 EAT | TAKE,
                 // name
-                "apple",
+                "pill",
                 // synonyms
-                new String[]{"apple"},
+                new String[]{"pill"},
                 // modifier
                 "blue",
                 // shortDescription

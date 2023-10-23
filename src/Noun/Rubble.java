@@ -1,5 +1,7 @@
-package Nouns;
+package Noun;
 
+
+import ParseGroup.DAO;
 
 public class Rubble extends Noun {
 
@@ -34,11 +36,15 @@ public class Rubble extends Noun {
 
             ornateEgg = new OrnateEgg();
             roomInventory.addItem(ornateEgg);
+            System.out.println(msg);
+            DAO.addGiveADamns(10, "Find ornate egg");
         }
-        else
+        else {
             msg += "Which once held an ornate egg.";
+            System.out.println(msg);
+        }
 
-        System.out.println(msg);
+
     }
 
 }

@@ -1,5 +1,7 @@
-package Nouns;
+package Noun;
 
+
+import ParseGroup.DAO;
 
 public class OrnateEgg extends Noun {
 
@@ -32,6 +34,7 @@ public class OrnateEgg extends Noun {
         myInventory.addItem(new BottleCap());
         roomInventory.removeItem(this);
         roomInventory.addItem(new IDCard());
+        DAO.addGiveADamns(-20, "Ornate egg deception");
     }
 
     public void examine(NounInventory myInventory, NounInventory roomInventory)

@@ -1,9 +1,13 @@
 package Rooms;
 
 
-import Nouns.*;
+import Noun.*;
+import ParseGroup.DAO;
 
 public class AtAlly extends Room {
+
+
+    AllyDoor lockedDoor = null;
 
     public AtAlly() {
 
@@ -25,8 +29,34 @@ public class AtAlly extends Room {
         addExit ("west", "AllyLobby");
         addExit ("north", "AtBar");
 
-        addItem (new AllyDoor());
+//        DAO.scannerRoom = this;
+//        DAO.lockedDoor = new AllyDoor();
+        lockedDoor = new AllyDoor();
+        addItem (lockedDoor);
         addItem (new CardScanner());
+
     }
+
+
+    public void setLocked(boolean locked)
+        {
+            lockedDoor.open(); }
+
+
+
+
+    public String goDirection(String direction) {
+        if (direction.isBlank())
+            return null;
+
+        if (direction.equals("west") && lockedDoor.isLocked()) {
+            System.out.println("Door is locked.");
+            return null;
+        }
+        String gotoRoom = directions.get(direction);
+        return gotoRoom;
+    }
+
+
 
 }

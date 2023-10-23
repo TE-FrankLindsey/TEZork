@@ -39,6 +39,10 @@ public abstract class SyntaxElement {
         this.longDescription = null;
     }
 
+
+    public boolean isClass(String className)
+        { return getClass().getName().equals(className); }
+
     public boolean nameEquals(String name)
         { return name.equalsIgnoreCase(name); }
 

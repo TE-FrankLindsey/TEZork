@@ -1,4 +1,4 @@
-package Nouns;
+package Noun;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,6 @@
 package Rooms;
 
 
-import Nouns.Noun;
-
 public class AtBar extends Room {
 
     public AtBar() {

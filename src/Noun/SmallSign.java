@@ -1,4 +1,4 @@
-package Nouns;
+package Noun;
 
 
 public class SmallSign extends Noun {

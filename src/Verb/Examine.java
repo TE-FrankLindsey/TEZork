@@ -1,7 +1,8 @@
 package Verb;
 
-import Nouns.NounInventory;
-import Nouns.Noun;
+import Noun.NounInventory;
+import Noun.Noun;
+import ParseGroup.DAO;
 
 public class Examine extends Verb {
 
@@ -19,7 +20,7 @@ public class Examine extends Verb {
     public inventorySpec whichInventory()
         { return inventorySpec.ANY; }
 
-    public void runCommand(Noun noun, Noun prepNoun, NounInventory myInventory, NounInventory roomInventory) {
+    public void runCommand(Noun noun, Noun prepNoun, NounInventory roomInventory) {
         if (noun == null) {
             System.out.println("you're not holding that.");
         } else if (noun.isUnknown()) {
@@ -28,7 +29,7 @@ public class Examine extends Verb {
             System.out.printf("Which %s did you want to examine?\n", noun.getName());
         } else {
             // individualize result for each noun
-            noun.examine(myInventory, roomInventory);
+            noun.examine(DAO.myInventory, roomInventory);
         }
     }
 

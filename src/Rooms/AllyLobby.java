@@ -1,8 +1,9 @@
 package Rooms;
 
 
-import Nouns.Water;
-import Nouns.WaterFountain;
+import Noun.BluePill;
+import Noun.RedPill;
+import Noun.WaterFountain;
 
 public class AllyLobby extends Room {
 
@@ -19,12 +20,11 @@ public class AllyLobby extends Room {
                 "And a stairwell, currently blocked by a trashcan, currently on fire."
         );
 
-//        locked = true;
 
         addExit ("east", "AtAlly");
-        addOtherItem(new Water());
         addItem (new WaterFountain());
-        addItem (new Water());
+        addItem (new RedPill());
+        addItem (new BluePill());
     }
 
 }

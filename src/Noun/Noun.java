@@ -1,4 +1,4 @@
-package Nouns;
+package Noun;
 
 import SyntaxElement.SyntaxElement;
 
@@ -17,6 +17,7 @@ public abstract class Noun extends SyntaxElement {
     protected final static int POUR = 64;
     protected final static int SCAN = 128;
     protected final static int HIDE = 256;
+    protected final static int DRINK = 512;
 
     protected int attributes;
 
@@ -25,9 +26,6 @@ public abstract class Noun extends SyntaxElement {
 
     public boolean isUnknown()
         { return getClass().getName().equals("Nouns.UnknownNoun"); }
-
-    public boolean isClass(String className)
-    { return getClass().getName().equals(className); }
 
     public boolean isAmbiguous()
         { return ambiguous; }
@@ -99,8 +97,7 @@ public abstract class Noun extends SyntaxElement {
     public boolean canEat ()
         { return (attributes&EAT) == EAT; }
     public boolean canTake ()
-        {
-            return (attributes&TAKE) == TAKE; }
+        { return (attributes&TAKE) == TAKE; }
     public boolean canTalk ()
         { return (attributes&TALK) == TALK; }
     public boolean canOpen ()
@@ -109,6 +106,8 @@ public abstract class Noun extends SyntaxElement {
         { return (attributes&SCAN) == SCAN; }
     public boolean canHide ()
         { return (attributes&HIDE) == HIDE; }
+    public boolean canDrink ()
+        { return (attributes&DRINK) == DRINK; }
 
 
 //
@@ -120,6 +119,12 @@ public abstract class Noun extends SyntaxElement {
         myInventory.addItem(this);
         roomInventory.removeItem(this);
     };
+
+    public boolean eat()
+        { return false; };
+
+    public boolean drink()
+        { return false; };
 
     public void drop(Noun prepNoun, NounInventory myInventory, NounInventory roomInventory) {
 //        Clerk.cStat = Clerk.ConduomStatus.GONE;
@@ -133,13 +138,15 @@ public abstract class Noun extends SyntaxElement {
         { System.out.printf("You touched the %s.  Did that give you a thrill?", getDisplayName()); }
 
     public void examine(NounInventory myInventory, NounInventory roomInventory)
-        {
-            System.out.println(getDescription()); }
+        { System.out.println(getDescription()); }
 
     public void talk(Noun prepNoun, NounInventory inventory)
         { System.out.printf("\"Will the Bengals make the playoffs?\""); }
 
     public boolean open(Noun prepNoun, NounInventory myInventory)
+        { return false; }
+
+    public boolean scan()
         { return false; }
 
     public boolean fill(Noun prepNoun, NounInventory myInventory)

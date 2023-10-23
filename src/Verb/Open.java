@@ -1,7 +1,8 @@
 package Verb;
 
-import Nouns.NounInventory;
-import Nouns.Noun;
+import Noun.NounInventory;
+import Noun.Noun;
+import ParseGroup.DAO;
 
 public class Open extends Verb {
 
@@ -19,7 +20,7 @@ public class Open extends Verb {
     public inventorySpec whichInventory()
         { return inventorySpec.ANY; }
 
-    public void runCommand(Noun noun, Noun prepNoun, NounInventory myInventory, NounInventory roomInventory) {
+    public void runCommand(Noun noun, Noun prepNoun, NounInventory roomInventory) {
 
         if (noun == null)
             System.out.println("I don't see that here.");
@@ -29,7 +30,7 @@ public class Open extends Verb {
             System.out.printf("Hard as you try you cannot open the %s!", noun.getDisplayName());
         else {
 //            System.out.printf("You opened the %s.\n", noun.getDisplayName());
-            noun.open (prepNoun, myInventory);
+            noun.open (prepNoun, DAO.myInventory);
 //            myInventory.addItem(noun);
 //            roomInventory.removeItem(noun);
         }

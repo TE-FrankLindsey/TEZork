@@ -1,9 +1,9 @@
-package Nouns;
+package Noun;
 
 
-public class RedPill extends Noun {
+public class Pill extends Noun {
 
-    public RedPill() {
+    public Pill () {
 
         super(
                 // attributes
@@ -13,11 +13,11 @@ public class RedPill extends Noun {
                 // synonyms
                 new String[]{"pill"},
                 // modifier
-                "red",
+                "",
                 // shortDescription
-                "shortDescription: It's red",
+                "shortDescription: It's a pill",
                 // longDescription
-                "longDescription: It's red"
+                "longDescription: It's a pill"
         );
     }
 

@@ -1,10 +1,10 @@
 package Rooms;
 
 
-import Nouns.Clerk;
-import Nouns.Condom;
-import Nouns.Shelves;
-import Nouns.SmallSign;
+import Noun.Clerk;
+import Noun.Condom;
+import Noun.Shelves;
+import Noun.SmallSign;
 
 public class QuikiMart extends Room {
 

@@ -1,4 +1,4 @@
-package Nouns;
+package Noun;
 
 
 public class Water extends Noun {
@@ -7,7 +7,7 @@ public class Water extends Noun {
 
         super(
                 // attributes
-                HIDE | TAKE,
+                DRINK,
                 // name
                 "water",
                 // synonyms
@@ -28,6 +28,9 @@ public class Water extends Noun {
     public void take(NounInventory myInventory, NounInventory roomInventory)
         { System.out.println("You take a handfull but it runs out between your fingers.  (Maybe if you had something to put it in?)"); }
 
-
+    public boolean eat() {
+        System.out.printf("Ahhh...the pause that refreshes!\n");
+        return true;
+    };
 
 }
