@@ -34,24 +34,14 @@ public class Room extends SyntaxElement{
     }
 
     protected NounInventory inventory = new NounInventory();
-    protected NounInventory otherInventory = new NounInventory();
 
     public NounInventory getInventory() {
         return inventory;
     }
 
-    public NounInventory getOtherInventory() {
-        return otherInventory;
-    }
     public void addItem (Noun someThing) {
         inventory.addItem(someThing);
     }
-
-    public void addOtherItem (Noun someThing) {
-        otherInventory.addItem(someThing);
-    }
-
-
 
     protected Room (String name, String shortDesc, String longDesc) {
         super(name, shortDesc, longDesc);

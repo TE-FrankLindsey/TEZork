@@ -131,9 +131,8 @@ public abstract class Noun extends SyntaxElement {
     };
 
     public void put(Noun prepNoun, NounInventory myInventory, NounInventory roomInventory) {
-        int x = 0;
-//        Clerk.cStat = Clerk.ConduomStatus.GONE;
     };
+
     public void touch()
         { System.out.printf("You touched the %s.  Did that give you a thrill?", getDisplayName()); }
 

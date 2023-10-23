@@ -106,16 +106,10 @@ someString = parser.remainingText();
         else if (currVerb.whichInventory() == Verb.inventorySpec.ROOM)
             parser.parseCommandNoun(DAO.getRoomInventory());
 
-
-//        if (currVerb.whichInventory() == Verb.inventorySpec.MY)
-//            parser.parseCommandNoun(DAO.getMyInventory());
-//        else if (currVerb.whichInventory() == Verb.inventorySpec.ROOM)
-//            parser.parseCommandNoun(DAO.getRoomInventory());
-
         // for inventory of ANY specified, try applying verb to MyInventory then RoomInventory
-        else if (! parser.parseCommandNoun(DAO.getMyInventory()))
-            parser.parseCommandNoun(DAO.getRoomInventory());
-someString = parser.remainingText();
+
+        else  if (!parser.parseCommandNoun(DAO.getMyInventory()))
+                parser.parseCommandNoun(DAO.getRoomInventory());
 
         Noun currNoun = parser.getNoun();
 
@@ -125,9 +119,6 @@ someString = parser.remainingText();
         Noun prepNoun = parser.parsePrepPhrase (DAO.getMyInventory());
         if (prepNoun==null || prepNoun.isUnknown()) {
             prepNoun = parser.parsePrepPhrase (DAO.getRoomInventory());
-        }
-        if (prepNoun==null || prepNoun.isUnknown()) {
-            prepNoun = parser.parsePrepPhrase (DAO.getRoomOtherInventory());
         }
 
         // run command with the noun and prepositional noun

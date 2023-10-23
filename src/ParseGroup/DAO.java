@@ -62,9 +62,6 @@ public class DAO {
     public static NounInventory getRoomInventory ()
         { return currRoom.getInventory(); }
 
-    public static NounInventory getRoomOtherInventory ()
-        { return currRoom.getOtherInventory(); }
-
     public static Map<String, String> getRoomDirections()
         { return currRoom.getDirections(); }
 

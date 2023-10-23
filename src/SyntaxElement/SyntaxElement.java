@@ -40,6 +40,12 @@ public abstract class SyntaxElement {
     }
 
 
+    public void setShortDescription(String description)
+        { this.shortDescription = description;  }
+
+    public void setLongDescription(String description)
+    { this.longDescription = description;  }
+
     public boolean isClass(String className)
         { return getClass().getName().equals(className); }
 

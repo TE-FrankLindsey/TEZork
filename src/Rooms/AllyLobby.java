@@ -3,6 +3,7 @@ package Rooms;
 
 import Noun.BluePill;
 import Noun.RedPill;
+import Noun.Water;
 import Noun.WaterFountain;
 
 public class AllyLobby extends Room {
@@ -22,6 +23,7 @@ public class AllyLobby extends Room {
 
 
         addExit ("east", "AtAlly");
+        addItem (new Water());
         addItem (new WaterFountain());
         addItem (new RedPill());
         addItem (new BluePill());

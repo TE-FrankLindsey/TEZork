@@ -21,7 +21,6 @@ public class QuikiMart extends Room {
         );
 
         addExit ("west", "AtQuikiMart");
-        addOtherItem(new Condom());
         addItem(new Clerk());
         addItem(new Shelves());
         addItem(new SmallSign());
